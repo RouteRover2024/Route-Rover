@@ -4,11 +4,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { ModeToggle } from "./components/ui/mode-toggle"
+import { CheckboxWithText } from "./components/checkbox-custom"
 
 function App() {
 
@@ -30,10 +30,8 @@ function App() {
             <Button variant="outline">Get Started</Button>
           </p>
         </CardContent>
-        <CardFooter>
-          <p>GG hehe</p>
-        </CardFooter>
       </Card>
+    <CheckboxWithText></CheckboxWithText>
     </div>
   )
 }
