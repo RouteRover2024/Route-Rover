@@ -1,5 +1,5 @@
-import { ThemeProvider } from "./ui/theme-provider"
-import { ModeToggle } from "./ui/mode-toggle"
+import { ThemeProvider } from "../ui/theme-provider"
+import { ModeToggle } from "../ui/mode-toggle"
 
 const NavBar = () => {
   return (
