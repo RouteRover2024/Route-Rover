@@ -1,13 +1,12 @@
-
-import {Header,Footer} from '../components'
+import { Header, Footer } from "../components";
 
 const Home = () => {
-  return (
-    <>
-    <Header />
-    <Footer />
-    </>
-  )
-}
+	return (
+		<>
+			<Header />
+			<Footer />
+		</>
+	);
+};
 
-export default Home
+export default Home;
