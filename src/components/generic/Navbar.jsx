@@ -4,7 +4,7 @@ import { Button, buttonVariants } from "../ui/button";
 
 const NavBar = () => {
 	return (
-		<div className="w-[var(--full-width)] h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 z-10 backdrop-blur-sm border-b-2 border-[hsl(var(--border))] rounded-lg">
+		<div className="w-[var(--full-width)] h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 z-100 backdrop-blur-sm border-b-2 border-primary rounded-lg font-[montserrat]">
 			<section className="leftstuff">
 				<img
 					src="src\assets\RouteRoverLogoText.svg"
@@ -13,32 +13,20 @@ const NavBar = () => {
 				/>
 			</section>
 			<section className="centerstuff"></section>
-			<section className="rightstuff flex flex-row items-center justify-between gap-4">
-				<a
-					href="#home"
-					className="px-4 py-2 hover:border-b-2 hover:border-[hsl(var(--primary))] transition-all hover:text-[hsl(var(--primary))]"
-				>
+			<section className="rightstuff flex-row items-center justify-between gap-4 hidden md:flex">
+				<a href="#home" className="navbar-links">
 					Home
 				</a>
 
-				<a
-					href="#features"
-					className="px-4 py-2 hover:border-b-2 hover:border-[hsl(var(--primary))] transition-all hover:text-[hsl(var(--primary))]"
-				>
+				<a href="#features" className="navbar-links">
 					Features
 				</a>
 
-				<a
-					href="#details"
-					className="px-4 py-2 hover:border-b-2 hover:border-[hsl(var(--primary))] transition-all hover:text-[hsl(var(--primary))]"
-				>
+				<a href="#details" className="navbar-links">
 					Details
 				</a>
 
-				<a
-					href="#aboutus"
-					className="px-4 py-2 hover:border-b-2 hover:border-[hsl(var(--primary))] transition-all hover:text-[hsl(var(--primary))]"
-				>
+				<a href="#aboutus" className="navbar-links">
 					About us
 				</a>
 				<ThemeProvider>

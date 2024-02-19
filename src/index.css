@@ -1,7 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
 	:root {
 		--full-width: calc(100dvw - 6px);
@@ -60,6 +60,9 @@
 	}
 	.landing-section {
 		@apply h-dvh w-[var(--full-width)] flex items-center justify-center text-4xl text-primary;
+	}
+	.navbar-links {
+		@apply w-fit px-4 py-2 after:mt-1 relative text-center after:block after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:-translate-x-4 hover:border-primary hover:text-primary transition-all font-semibold;
 	}
 }
 
