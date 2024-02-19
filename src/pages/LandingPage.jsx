@@ -4,14 +4,17 @@ function LandingPage() {
 	return (
 		<div>
 			<NavBar></NavBar>
-			<div className="checking h-dvh w-[var(--full-width)] bg-background border-4 border-accent opacity-50 flex items-center justify-center text-4xl text-primary">
-				Section1
+			<div id="home" className="landing-section">
+				Home
 			</div>
-			<div className="checking h-dvh w-[var(--full-width)] bg-background border-4 border-accent opacity-50 flex items-center justify-center text-4xl text-primary">
-				Section2
+			<div id="features" className="landing-section">
+				Features
 			</div>
-			<div className="checking h-dvh w-[var(--full-width)] bg-background border-4 border-accent opacity-50 flex items-center justify-center text-4xl text-primary">
-				Section3
+			<div id="details" className="landing-section">
+				Details
+			</div>
+			<div id="aboutus" className="landing-section">
+				About us
 			</div>
 		</div>
 	);

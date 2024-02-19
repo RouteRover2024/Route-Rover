@@ -58,6 +58,9 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+	.landing-section {
+		@apply h-dvh w-[var(--full-width)] bg-background border-4 border-accent opacity-50 flex items-center justify-center text-4xl text-primary;
+	}
 }
 
 ::-webkit-scrollbar {
@@ -74,4 +77,8 @@
 
 ::-webkit-scrollbar-thumb:hover {
 	background: hsl(var(--primary));
+}
+
+html {
+	scroll-behavior: smooth;
 }
