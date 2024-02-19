@@ -4,6 +4,7 @@
 
 @layer base {
 	:root {
+		--full-width: calc(100dvw - 6px);
 		--background: 0 0% 100%;
 		--foreground: 20 14.3% 4.1%;
 		--card: 0 0% 100%;
@@ -27,6 +28,7 @@
 	}
 
 	.dark {
+		--full-width: calc(100dvw - 6px);
 		--background: 20 14.3% 4.1%;
 		--foreground: 60 9.1% 97.8%;
 		--card: 20 14.3% 4.1%;
@@ -56,4 +58,20 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: hsl(var(--secondary));
+}
+
+::-webkit-scrollbar-thumb {
+	background: hsl(var(--primary));
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: hsl(var(--primary));
 }
