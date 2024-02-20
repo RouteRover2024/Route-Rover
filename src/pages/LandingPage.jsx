@@ -11,20 +11,20 @@ function LandingPage() {
 				id="home"
 				className="landing-section h-auto md:h-[80dvh] md:overflow-y-hidden flex flex-col-reverse md:flex-row justify-center items-center mt-8 md:mt-24 "
 			>
-				<section className="text-foreground font-[Montserrat]  text-3xl md:text-4xl text-center p-4 px-4">
-					<h2>
+				<section className="text-foreground font-[Montserrat]  text-xl md:text-4xl text-center p-4 px-4">
+					<h2 className="leading-relaxed">
 						Planning your Journey <br /> has never been this <br />
 						<ReactTyped
-							strings={["Easy", "Fast", "Cheap"]}
+							strings={["Easy", "Fast", "Cheap", "Comfortable"]}
 							typeSpeed={100}
 							loop
 							backSpeed={20}
 							cursorChar="|"
 							showCursor={true}
-							className="text-primary font-semibold text-4xl md:text-7xl"
+							className="text-primary font-semibold text-4xl md:text-7xl drop-shadow-[0_0_60px_hsl(var(--primary))]"
 						/>
 					</h2>
-					<p className="text-base mt-4 md:mt-8 text-secondary-foreground font-[worksans] px-8 lg:px-16">
+					<p className="text-sm md:text-base mt-4 md:mt-8 text-secondary-foreground font-[worksans] px-4 lg:px-16">
 						Effortlessly explore routes, compare costs, & prioritize
 						comfort to make informed travel decisions tailored to
 						your preferences and budget.

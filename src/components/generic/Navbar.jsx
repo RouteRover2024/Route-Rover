@@ -3,7 +3,7 @@ import { ModeToggle } from "../ui/mode-toggle";
 
 const NavBar = () => {
 	return (
-		<div className="w-[90dvw] overflow-x-clip h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 z-100 backdrop-blur-sm border-b-2 border-primary rounded-lg font-[montserrat]">
+		<div className="w-[90dvw] overflow-x-clip h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 z-100 backdrop-blur-sm border-b-2 border-primary rounded-lg font-[montserrat] shadow-[0_12px_32px_hsl(var(--primary))] hover:shadow-[0_24px_32px_hsl(var(--primary))]">
 			<section className="leftstuff">
 				<img
 					src="src\assets\RouteRoverLogoText.svg"

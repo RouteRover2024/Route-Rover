@@ -7,6 +7,6 @@
 		@apply h-dvh w-[95dvw] overflow-x-hidden flex items-center justify-center text-primary p-12;
 	}
 	.navbar-links {
-		@apply w-fit px-4 py-2 after:mt-1 relative text-center after:block after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:-translate-x-4 hover:border-primary hover:text-primary transition-all font-semibold;
+		@apply w-fit px-4 py-2 after:mt-1 relative text-center after:block after:content-[''] after:absolute after:h-[2px] after:bg-primary after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center after:-translate-x-4 hover:border-primary hover:text-primary transition-all font-semibold hover:drop-shadow-[0_0_32px_hsl(var(--primary))];
 	}
 }
