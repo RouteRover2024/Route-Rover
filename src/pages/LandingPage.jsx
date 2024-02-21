@@ -24,14 +24,14 @@ function LandingPage() {
 							className="text-primary font-semibold text-4xl md:text-7xl drop-shadow-[0_0_60px_hsl(var(--primary))]"
 						/>
 					</h2>
-					<p className="text-sm md:text-base mt-4 md:mt-8 text-secondary-foreground font-[worksans] px-4 lg:px-16">
+					<p className="text-sm md:text-base mt-4 md:mt-8 text-secondary-foreground font-worksans px-4 lg:px-16">
 						Effortlessly explore routes, compare costs, & prioritize
 						comfort to make informed travel decisions tailored to
 						your preferences and budget.
 					</p>
 					<Button
 						variant="default"
-						className="mt-8 font-[worksans] font-bold hover:shadow-[0_0_60px_hsl(var(--primary))] transition-all duration-300"
+						className="mt-8 font-worksans font-bold hover:shadow-[0_0_60px_hsl(var(--primary))] transition-all duration-300"
 					>
 						Start your Journey
 					</Button>
