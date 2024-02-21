@@ -2,6 +2,7 @@ import NavBar from "../components/generic/Navbar";
 import "./styles/landing.css";
 import { ReactTyped } from "react-typed";
 import { Button, buttonVariants } from "@/components/ui/button";
+import heroasset from "../images/HeroAsset.png";
 
 function LandingPage() {
 	return (
@@ -38,7 +39,7 @@ function LandingPage() {
 				</section>
 				<section className=" text-foreground flex-shrink-0">
 					<img
-						src="src/assets/HeroAsset.png"
+						src={heroasset}
 						alt="HeroAsset"
 						className="w-72 md:w-auto md:h-[600px]"
 					/>
