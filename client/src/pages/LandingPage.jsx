@@ -14,7 +14,7 @@ function LandingPage() {
 		<div className="flex flex-col items-center">
 			<div
 				id="Home"
-				className="landing-section h-auto flex flex-col-reverse lg:flex-row justify-center items-center mt-8"
+				className="landing-section h-auto flex flex-col-reverse lg:flex-row justify-center items-center mt-8 -z-100"
 			>
 				<section className="text-foreground font-[Montserrat]  text-xl lg:text-4xl text-center p-4 px-4">
 					<h2 className="leading-relaxed">
@@ -45,21 +45,21 @@ function LandingPage() {
 					<img
 						src="src/assets/HeroAsset.png"
 						alt="HeroAsset"
-						className="w-72 lg:w-auto lg:h-[600px]"
+						className="w-72 lg:w-auto lg:h-[600px] drop-shadow-[0_0_60px_hsl(var(--primary))]"
 					/>
 				</section>
 			</div>
 			<hr className="w-[90dvw] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" />
 			<div
 				id="features"
-				className="landing-section flex justify-center gap-4 md:gap-20 items-center w-full flex-col md:flex-row border-2 border-blue-500"
+				className="landing-section flex justify-center gap-4 md:gap-20 items-center w-full flex-col md:flex-row"
 			>
 				<img
 					src={map}
 					alt="Map Skeleton"
 					className="w-auto lg:w-[500px] rounded-lg drop-shadow-[0_0_60px_hsl(var(--primary))] -z-10"
 				/>
-				<ul className="Text-right h-auto w-auto text-md md:text-2xl mt-4 text-secondary-foreground font-worksans px-4 lg:px-16 flex-col border-2 border-green-500">
+				<ul className="Text-right h-auto w-auto text-md md:text-2xl mt-4 text-secondary-foreground font-worksans px-4 lg:px-16 flex-col">
 					<li>
 						<h2 className="flex items-center gap-2 my-2 text-primary font-semibold">
 							<CurrencyRupeeIcon />

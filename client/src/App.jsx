@@ -7,19 +7,19 @@ import Error from "./components/generic/Error";
 import NavBar from "./components/generic/Navbar";
 
 function App() {
-  return (
-    <Router>
-      <div className="flex flex-col items-center">
-        <NavBar />
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='*' element={<Error />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+	return (
+		<Router>
+			<div className="flex flex-col items-center">
+				<NavBar />
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="*" element={<Error />} />
+				</Routes>
+			</div>
+		</Router>
+	);
 }
 
 export default App;

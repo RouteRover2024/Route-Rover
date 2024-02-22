@@ -31,7 +31,7 @@ const NavBar = () => {
 		getUser();
 	}, []);
 	return (
-		<div className="w-[90dvw] overflow-x-clip h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 z-100 backdrop-blur-sm border-b-2 border-primary rounded-lg font-[montserrat] shadow-[0_12px_32px_hsl(var(--primary))] hover:h-20 transition-all duration-300">
+		<div className="w-[90dvw] h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 backdrop-blur-sm border-b-2 border-primary rounded-lg font-[montserrat] shadow-[0_12px_32px_hsl(var(--primary))] hover:h-20 transition-all duration-300">
 			<div className="leftstuff">
 				<img
 					src="src\assets\RouteRoverLogoText.svg"
@@ -48,29 +48,31 @@ const NavBar = () => {
 				</li>
 				{Object?.keys(userdata)?.length > 0 ? (
 					<>
-						<li>{userdata?.displayName}</li>
 						<li>
-							<NavLink to="/dashboard">Dashboard</NavLink>
+							<NavLink to="/dashboard" className="navbar-links">
+								Dashboard
+							</NavLink>
 						</li>
-						<li onClick={logout}>Logout</li>
-						<li>
-							<img src={userdata?.image} alt="DP" />
+						<li
+							onClick={logout}
+							className="navbar-links text-destructive hover:text-destructive hover:drop-shadow-[0_0_32px_hsl(var(--destructive))]"
+						>
+							Logout
+						</li>
+						<li className="navbar-links">
+							<div className="flex justify-center items-center gap-4">
+								<img src={userdata?.image} alt="DP" className="h-8 rounded-full"/>
+								<p>{userdata?.displayName}</p>
+							</div>
 						</li>
 					</>
 				) : (
 					<>
 						<li>
-							<NavLink to="/#Features" className="navbar-links">
-								Features
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to="/#OurTeam" className="navbar-links">
-								Our Team
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to="/login" className="navbar-links">
+							<NavLink
+								to="/login"
+								className="navbar-links text-green-500 hover:text-green-500 hover:drop-shadow-[0_0_32px_green]"
+							>
 								Login
 							</NavLink>
 						</li>
