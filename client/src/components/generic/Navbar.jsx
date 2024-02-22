@@ -61,7 +61,11 @@ const NavBar = () => {
 						</li>
 						<li className="navbar-links">
 							<div className="flex justify-center items-center gap-4">
-								<img src={userdata?.image} alt="DP" className="h-8 rounded-full"/>
+								<img
+									src={userdata?.image}
+									alt="DP"
+									className="h-8 rounded-full"
+								/>
 								<p>{userdata?.displayName}</p>
 							</div>
 						</li>
