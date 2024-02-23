@@ -6,7 +6,7 @@ const Footer = () => {
 			<div className="bg-secondary w-full rounded-sm flex items-center justify-center pt-4">
 				<img src={routerover} alt="RouteRover" className="w-[25%]" />
 			</div>
-			<div className="bg-secondary w-full rounded-sm flex flex-row flex-wrap items-center justify-center gap-8 p-4 pb-8 divide-x-2 dark:divide-slate-500">
+			<div className="bg-secondary w-full rounded-sm flex flex-row flex-wrap items-center justify-center gap-8 p-4 pb-8 divide-y-2 md:divide-x-2 dark:divide-slate-500">
 				<div>
 					<div className="w-80 flex flex-col items-center justify-center">
 						<h2 className="text-lg font-worksans font-semibold">

@@ -2,7 +2,7 @@ import "./styles/landing.css";
 import { ReactTyped } from "react-typed";
 import { Button } from "@/components/ui/button";
 import map from "../assets/MapIllustration.svg";
-import heroasset from "../../assets/HeroAsset.png";
+import heroasset from "../assets/HeroAsset.png";
 import profile from "../assets/profile_alt.jpeg";
 //import manjiri from "../assets/Manjiri.jpg";
 // import nishita from "../assets/Nishita.jpg";
@@ -65,7 +65,7 @@ function LandingPage() {
 			</div>
 			<div
 				id="features"
-				className="landing-section h-auto flex justify-center gap-4 md:gap-x-20 gap-y-40 items-center w-full flex-col md:flex-row flex-wrap -z-10"
+				className="landing-section h-auto flex justify-center gap-4 md:gap-20 items-center w-full flex-col md:flex-row flex-wrap -z-10"
 			>
 				<HorizontalCards headings={features} />
 				<img
