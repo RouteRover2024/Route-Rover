@@ -2,8 +2,13 @@ import "./styles/landing.css";
 import { ReactTyped } from "react-typed";
 import { Button } from "@/components/ui/button";
 import map from "../assets/MapIllustration.svg";
-import React from "react";
+import manjiri from "../assets/Manjiri.jpg";
+// import nishita from "../assets/Nishita.jpg";
+// import satyam from "../assets/Satyam.jpg";
+import Footer from "@/components/generic/Footer";
+
 import HorizontalCards from "@/components/generic/Horizontal";
+import { Card, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ChairIcon from "@mui/icons-material/Chair";
@@ -102,9 +107,51 @@ function LandingPage() {
 				</ul>
 			</div>
 			<HorizontalCards headings={ourteam} className="-z-100" />
-			<div id="OurTeam" className="landing-section">
-				OurTeam
+			<div
+				id="OurTeam"
+				className="landing-section h-auto py-32 flex flex-row flex-wrap justify-evenly items-center gap-4"
+			>
+				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
+					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
+					<CardContent className="mt-4 flex flex-col items-center justify-center">
+						<img
+							src={manjiri}
+							alt="Manjiri Chavande"
+							className="rounded-md h-auto w-full"
+						/>
+					</CardContent>
+					<CardFooter className="text-center">
+						MERN Stack Developer
+					</CardFooter>
+				</Card>
+				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
+					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
+					<CardContent className="mt-4 flex flex-col items-center justify-center">
+						<img
+							src={manjiri}
+							alt="Manjiri Chavande"
+							className="rounded-md h-auto w-full"
+						/>
+					</CardContent>
+					<CardFooter className="text-center">
+						MERN Stack Developer
+					</CardFooter>
+				</Card>
+				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
+					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
+					<CardContent className="mt-4 flex flex-col items-center justify-center">
+						<img
+							src={manjiri}
+							alt="Manjiri Chavande"
+							className="rounded-md h-auto w-full"
+						/>
+					</CardContent>
+					<CardFooter className="text-center">
+						MERN Stack Developer
+					</CardFooter>
+				</Card>
 			</div>
+			<Footer />
 		</div>
 	);
 }
