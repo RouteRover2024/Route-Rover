@@ -64,11 +64,11 @@ function LandingPage() {
 					/>
 				</section>
 			</div>
-			<HorizontalCards headings={features} className="-z-100" />
 			<div
 				id="features"
-				className="landing-section flex justify-center gap-4 md:gap-20 items-center w-full flex-col md:flex-row"
+				className="landing-section h-auto flex justify-center gap-4 md:gap-x-20 gap-y-40 items-center w-full flex-col md:flex-row flex-wrap -z-10"
 			>
+				<HorizontalCards headings={features} />
 				<img
 					src={map}
 					alt="Map Skeleton"
@@ -107,18 +107,18 @@ function LandingPage() {
 					</li>
 				</ul>
 			</div>
-			<HorizontalCards headings={ourteam} className="-z-100" />
 			<div
 				id="OurTeam"
-				className="landing-section h-auto py-32 flex flex-row flex-wrap justify-evenly items-center gap-4"
+				className="landing-section h-auto py-32 flex flex-row flex-wrap justify-evenly items-center gap-16 gap-y-40 -z-10"
 			>
+				<HorizontalCards headings={ourteam} className="-z-10" />
 				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
-					<CardTitle className="text-xl">Manjiri C</CardTitle>
+					<CardTitle className="text-xl">Nishita Panchal</CardTitle>
 					<CardContent className="mt-4 flex flex-col items-center justify-center">
 						<img
 							src={profile}
-							alt="Manjiri C"
-							className="rounded-md h-auto w-full"
+							alt="Nishita P"
+							className="rounded-md h-auto w-[75%] border-2 border-accent"
 						/>
 					</CardContent>
 					<CardFooter className="text-center">
@@ -126,12 +126,12 @@ function LandingPage() {
 					</CardFooter>
 				</Card>
 				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
-					<CardTitle className="text-xl">Nishita Panchal</CardTitle>
+					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
 					<CardContent className="mt-4 flex flex-col items-center justify-center">
 						<img
 							src={profile}
 							alt="Manjiri C"
-							className="rounded-md h-auto w-full"
+							className="rounded-md h-auto w-[75%] border-2 border-accent"
 						/>
 					</CardContent>
 					<CardFooter className="text-center">
@@ -143,8 +143,8 @@ function LandingPage() {
 					<CardContent className="mt-4 flex flex-col items-center justify-center">
 						<img
 							src={profile}
-							alt="Manjiri C"
-							className="rounded-md h-auto w-full"
+							alt="Satyam V"
+							className="rounded-md h-auto w-[75%] border-2 border-accent"
 						/>
 					</CardContent>
 					<CardFooter className="text-center">

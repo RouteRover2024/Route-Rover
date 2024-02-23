@@ -31,7 +31,7 @@ const NavBar = () => {
 		getUser();
 	}, []);
 	return (
-		<div className="w-[90dvw] h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 backdrop-blur-sm border-b-2 border-primary rounded-lg font-[montserrat] shadow-[0_12px_32px_hsl(var(--primary))] hover:h-20 transition-all duration-300">
+		<div className="w-[90dvw] h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 backdrop-blur-sm border-b-4 border-primary rounded-lg font-[montserrat] shadow-[0_12px_32px_hsl(var(--primary))] hover:h-20 transition-all duration-300">
 			<div className="leftstuff">
 				<img
 					src="src\assets\RouteRoverLogoText.svg"
