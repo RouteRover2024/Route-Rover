@@ -2,7 +2,8 @@ import "./styles/landing.css";
 import { ReactTyped } from "react-typed";
 import { Button } from "@/components/ui/button";
 import map from "../assets/MapIllustration.svg";
-import manjiri from "../assets/Manjiri.jpg";
+//import manjiri from "../assets/Manjiri.jpg";
+import profile from "../assets/profile_alt.jpeg";
 // import nishita from "../assets/Nishita.jpg";
 // import satyam from "../assets/Satyam.jpg";
 import Footer from "@/components/generic/Footer";
@@ -112,11 +113,11 @@ function LandingPage() {
 				className="landing-section h-auto py-32 flex flex-row flex-wrap justify-evenly items-center gap-4"
 			>
 				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
-					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
+					<CardTitle className="text-xl">Manjiri C</CardTitle>
 					<CardContent className="mt-4 flex flex-col items-center justify-center">
 						<img
-							src={manjiri}
-							alt="Manjiri Chavande"
+							src={profile}
+							alt="Manjiri C"
 							className="rounded-md h-auto w-full"
 						/>
 					</CardContent>
@@ -125,11 +126,11 @@ function LandingPage() {
 					</CardFooter>
 				</Card>
 				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
-					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
+					<CardTitle className="text-xl">Nishita Panchal</CardTitle>
 					<CardContent className="mt-4 flex flex-col items-center justify-center">
 						<img
-							src={manjiri}
-							alt="Manjiri Chavande"
+							src={profile}
+							alt="Manjiri C"
 							className="rounded-md h-auto w-full"
 						/>
 					</CardContent>
@@ -138,11 +139,11 @@ function LandingPage() {
 					</CardFooter>
 				</Card>
 				<Card className="w-60 h-72 p-4 text-center md:scale-125 font-worksans md:hover:scale-[1.35] transition-all">
-					<CardTitle className="text-xl">Manjiri Chavande</CardTitle>
+					<CardTitle className="text-xl">Satyam Vyas</CardTitle>
 					<CardContent className="mt-4 flex flex-col items-center justify-center">
 						<img
-							src={manjiri}
-							alt="Manjiri Chavande"
+							src={profile}
+							alt="Manjiri C"
 							className="rounded-md h-auto w-full"
 						/>
 					</CardContent>
