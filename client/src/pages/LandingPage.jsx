@@ -2,15 +2,14 @@ import "./styles/landing.css";
 import { ReactTyped } from "react-typed";
 import { Button } from "@/components/ui/button";
 import map from "../assets/MapIllustration.svg";
-//import manjiri from "../assets/Manjiri.jpg";
+import heroasset from "../../assets/HeroAsset.png";
 import profile from "../assets/profile_alt.jpeg";
+//import manjiri from "../assets/Manjiri.jpg";
 // import nishita from "../assets/Nishita.jpg";
 // import satyam from "../assets/Satyam.jpg";
 import Footer from "@/components/generic/Footer";
-
 import HorizontalCards from "@/components/generic/Horizontal";
 import { Card, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ChairIcon from "@mui/icons-material/Chair";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -58,7 +57,7 @@ function LandingPage() {
 				</section>
 				<section className=" text-foreground flex-shrink-0">
 					<img
-						src="src/assets/HeroAsset.png"
+						src={heroasset}
 						alt="HeroAsset"
 						className="w-72 lg:w-auto lg:h-[600px] drop-shadow-[0_0_60px_hsl(var(--primary))]"
 					/>

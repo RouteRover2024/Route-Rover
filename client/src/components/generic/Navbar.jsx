@@ -3,6 +3,7 @@ import { ModeToggle } from "../ui/mode-toggle";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../../pages/styles/navbar.css";
+import logoimg from "../../assets/RouteRoverLogoText.svg"
 import axios from "axios";
 
 const NavBar = () => {
@@ -34,7 +35,7 @@ const NavBar = () => {
 		<div className="w-[90dvw] h-16 px-4 sm:px-8 flex flex-row justify-between items-center fixed top-0 backdrop-blur-sm border-b-4 border-primary rounded-lg font-[montserrat] shadow-[0_12px_32px_hsl(var(--primary))] hover:h-20 transition-all duration-300">
 			<div className="leftstuff">
 				<img
-					src="src\assets\RouteRoverLogoText.svg"
+					src={logoimg}
 					alt="logo"
 					className="h-8"
 				/>
