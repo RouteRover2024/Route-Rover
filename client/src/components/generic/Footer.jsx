@@ -1,4 +1,4 @@
-import routerover from "../../assets/RouteRoverlogoText.svg";
+import routerover from "../../assets/RouteRoverLogoText.svg";
 
 const Footer = () => {
 	return (
