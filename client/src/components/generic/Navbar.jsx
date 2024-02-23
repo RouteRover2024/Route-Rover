@@ -41,11 +41,6 @@ const NavBar = () => {
 			</div>
 			<div className="centerstuff"></div>
 			<ul className="rightstuff w-auto flex-row items-center justify-between gap-4 hidden md:flex text-foreground">
-				<li>
-					<NavLink to="/" className="navbar-links">
-						Home
-					</NavLink>
-				</li>
 				{Object?.keys(userdata)?.length > 0 ? (
 					<>
 						<li>
@@ -72,6 +67,11 @@ const NavBar = () => {
 					</>
 				) : (
 					<>
+						<li>
+							<NavLink to="/" className="navbar-links">
+								Home
+							</NavLink>
+						</li>
 						<li>
 							<NavLink
 								to="/login"

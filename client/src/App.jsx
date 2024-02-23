@@ -10,7 +10,7 @@ function App() {
 	return (
 		<Router>
 			<div className="flex flex-col items-center">
-				<NavBar />
+				<NavBar className="z-100" />
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<Login />} />

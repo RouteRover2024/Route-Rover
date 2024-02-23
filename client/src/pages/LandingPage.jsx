@@ -1,15 +1,24 @@
-// import NavBar from "../components/generic/Navbar";
 import "./styles/landing.css";
 import { ReactTyped } from "react-typed";
 import { Button } from "@/components/ui/button";
 import map from "../assets/MapIllustration.svg";
-import NavBar from "@/components/generic/Navbar";
+import React from "react";
+import HorizontalCards from "@/components/generic/Horizontal";
 
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ChairIcon from "@mui/icons-material/Chair";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 function LandingPage() {
+	const features = [];
+	const ourteam = [];
+	if (features.length < 10) {
+		for (let i = 0; i < 10; i++) {
+			features.push("Features");
+			ourteam.push("Our Team");
+		}
+	}
+
 	return (
 		<div className="flex flex-col items-center">
 			<div
@@ -49,7 +58,7 @@ function LandingPage() {
 					/>
 				</section>
 			</div>
-			<hr className="w-[90dvw] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" />
+			<HorizontalCards headings={features} className="-z-100" />
 			<div
 				id="features"
 				className="landing-section flex justify-center gap-4 md:gap-20 items-center w-full flex-col md:flex-row"
@@ -92,7 +101,7 @@ function LandingPage() {
 					</li>
 				</ul>
 			</div>
-			<hr className="w-[90dvw] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" />
+			<HorizontalCards headings={ourteam} className="-z-100" />
 			<div id="OurTeam" className="landing-section">
 				OurTeam
 			</div>
