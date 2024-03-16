@@ -49,6 +49,11 @@ const NavBar = () => {
 								Dashboard
 							</NavLink>
 						</li>
+						<li>
+							<NavLink to="/maps" className="navbar-links">
+								Maps
+							</NavLink>
+						</li>
 						<li
 							onClick={logout}
 							className="navbar-links text-destructive hover:text-destructive hover:drop-shadow-[0_0_32px_hsl(var(--destructive))]"
