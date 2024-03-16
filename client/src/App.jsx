@@ -7,10 +7,8 @@ import Dashboard from "./components/Dashboard";
 import Error from "./components/generic/Error";
 import NavBar from "./components/generic/Navbar";
 
-
 function App() {
 	return (
-		
 		<Router>
 			<div className="flex flex-col items-center">
 				<NavBar className="z-100" />
@@ -18,9 +16,9 @@ function App() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/dashboard" element={<Dashboard />} />
-					
+
 					<Route path="/maps" element={<SearchMap />} />
-					
+
 					<Route path="*" element={<Error />} />
 				</Routes>
 			</div>
