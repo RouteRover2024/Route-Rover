@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 /* global google */
-import { FaLocationArrow, FaTimes } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaRoad, FaTimes, FaLocationArrow } from 'react-icons/fa';
 
 import {
   GoogleMap,
@@ -73,13 +73,14 @@ function SearchMap() {
           mapContainerStyle={{ width: '100%', height: '100%' }}
           onLoad={map => setMap(map)}
         >
-          <Marker position={center} />
+          <Marker position={center} icon={<FaMapMarkerAlt size={24} color="#FFA500" />} />
           {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
         </GoogleMap>
       </div>
-      <div className="p-4 rounded-lg m-4 bg-black shadow-base min-w-[640px] z-10">
+      <div className="p-4 rounded-lg m-0 bg-gradient-to-r from-blue-700 to-blue-800 shadow-base min-w-[640px] z-10 text-white w-screen">
+      <div className='p-4 rounded-lg m-4 bg-gradient-to-r from-blue-700 to-blue-800 shadow-base min-w-[400px] z-10 text-white'>
         <div className="flex justify-between space-x-2">
-          <div className="flex-grow">
+          <div className="flex-grow w-1/3">
             <Autocomplete>
               <input
                 type="text"
@@ -89,7 +90,7 @@ function SearchMap() {
               />
             </Autocomplete>
           </div>
-          <div className="flex-grow">
+          <div className="flex-grow w-1/3">
             <Autocomplete>
               <input
                 type="text"
@@ -102,10 +103,10 @@ function SearchMap() {
           <div>
             <button
               type="button"
-              className="px-4 py-2 text-black bg-pink-500 rounded-lg focus:outline-none"
+              className="px-4 py-2 text-black bg-blue-500 rounded-lg focus:outline-none"
               onClick={calculateRoute}
             >
-              Calculate Route
+               Calculate Route
             </button>
             <button type="button" onClick={clearRoute} className="ml-2">
               <FaTimes />
@@ -113,8 +114,8 @@ function SearchMap() {
           </div>
         </div>
         <div className="flex justify-between mt-4 space-x-4">
-          <span>Distance: {distance}</span>
-          <span>Duration: {duration}</span>
+          <span><FaRoad className="mr-2" /> Distance: {distance}</span>
+          <span><FaMapMarkerAlt className="mr-2" /> Duration: {duration}</span>
           <button
             type="button"
             className="text-black bg-blue-500 rounded-full focus:outline-none"
@@ -126,6 +127,7 @@ function SearchMap() {
             <FaLocationArrow />
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
