@@ -3,9 +3,10 @@ import GoogleMapReact from "google-map-react";
 
 const Map = ({ coordinates }) => {
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-screen flex justify-center items-center">
+      
             <GoogleMapReact
-                bootstrapURLKeys={{ key: "AIzaSyA77j1_zXC56cpMcMrQnjF_H5iqE0XhdLE" }}
+                bootstrapURLKeys={{ key: "" }}
                 defaultCenter={coordinates}
                 center={coordinates}
                 defaultZoom={10}
