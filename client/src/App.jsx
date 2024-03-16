@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import Error from "./components/generic/Error";
 import NavBar from "./components/generic/Navbar";
 
+
 function App() {
 	return (
 		
@@ -17,7 +18,9 @@ function App() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/dashboard" element={<Dashboard />} />
+					
 					<Route path="/maps" element={<SearchMap />} />
+					
 					<Route path="*" element={<Error />} />
 				</Routes>
 			</div>
