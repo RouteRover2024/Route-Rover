@@ -8,12 +8,14 @@ import History from "./History";
 import Reports from "./Reports";
 import Addresses from "./Addresses";
 import Settings from "./Settings";
+import Error from "./Error";
 
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route exact path="/" element={<SignIn />} />
+				<Route exact path="/NotFound" element={<Error />} />
 				<Route path="/home" element={<HomePage />}>
 					<Route path="" element={<Dashboard />} />
 					<Route path="history" element={<History />} />

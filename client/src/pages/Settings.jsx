@@ -1,11 +1,23 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 function Settings() {
-	const navigate = useNavigate();
 	const logout = () => {
-		navigate("/logout");
-	};
+        localStorage.clear();
+        fetch("http://localhost:5173/logout", {
+            method: "GET",
+            credentials: "include" 
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = "/";
+            } else {
+                console.error("Logout failed");
+            }
+        })
+        .catch(error => {
+            console.error("Error during logout:", error);
+        });
+    };
 
 	return (
 		<div className="py-6">

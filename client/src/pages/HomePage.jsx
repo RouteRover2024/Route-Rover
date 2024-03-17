@@ -1,7 +1,8 @@
 // HomePage.jsx
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import RouteRover from "../assets/RouteRoverLogoText.svg";
+import axios from "axios";
 
 import {
 	ChartBarIcon,
@@ -13,18 +14,44 @@ import {
 	PlusCircleIcon,
 } from "@heroicons/react/outline";
 
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
+	const navigate = useNavigate();
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [userdata, setUserdata] = useState({});
+
+	console.log("Response", userdata);
+
+	const getUser = async () => {
+		try {
+			const response = await axios.get(
+				"http://localhost:6005/login/success",
+				{ withCredentials: true }
+			);
+			setUserdata(response.data.user);
+		} catch (error) {
+			console.log("Error", error);
+			navigate("/NotFound");
+		}
+	};
+
+	useEffect(() => {
+		getUser();
+	}, []);
 
 	const navigation = [
 		{ name: "Dashboard", to: "", icon: HomeIcon, current: true },
-		{ name: "New Search", to: "create", icon: PlusCircleIcon, current: true },
+		{
+			name: "New Search",
+			to: "create",
+			icon: PlusCircleIcon,
+			current: true,
+		},
 		{ name: "History", to: "history", icon: FolderIcon, current: false },
 		{ name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
 		{
@@ -128,13 +155,13 @@ export default function Example() {
 											<div>
 												<img
 													className="inline-block h-10 w-10 rounded-full"
-													src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+													src={userdata?.image}
 													alt=""
 												/>
 											</div>
 											<div className="ml-3">
 												<p className="text-base font-medium text-white">
-													Tom Cook
+													{userdata?.displayName}
 												</p>
 												<p className="text-sm font-medium text-slate-300 group-hover:text-white">
 													View profile
@@ -145,15 +172,14 @@ export default function Example() {
 								</div>
 							</div>
 						</Transition.Child>
-						<div className="flex-shrink-0 w-14" aria-hidden="true">
-							{/* Force sidebar to shrink to fit close icon */}
-						</div>
+						<div
+							className="flex-shrink-0 w-14"
+							aria-hidden="true"
+						></div>
 					</Dialog>
 				</Transition.Root>
 
-				{/* Static sidebar for desktop */}
 				<div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-					{/* Sidebar component, swap this element with another sidebar if you like */}
 					<div className="flex-1 flex flex-col min-h-0 bg-slate-700">
 						<div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
 							<div className="flex items-center flex-shrink-0 px-4">
@@ -191,13 +217,13 @@ export default function Example() {
 									<div>
 										<img
 											className="inline-block h-9 w-9 rounded-full"
-											src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+											src={userdata?.image}
 											alt=""
 										/>
 									</div>
 									<div className="ml-3">
 										<p className="text-sm font-bold text-white">
-											Tom Cook
+											{userdata?.displayName}
 										</p>
 										<p className="text-xs font-medium text-slate-300 group-hover:text-white">
 											View profile

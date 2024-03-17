@@ -97,9 +97,15 @@ app.get("/login/success", async (req, res) => {
 	}
 });
 
+app.use((req, res, next) => {
+	res.setHeader("Cache-Control", "no-store");
+	next();
+});
+
 app.get("/logout", (req, res) => {
-	req.logout();
-	res.redirect("http://localhost:5173/");
+	req.logout(); 
+	res.clearCookie("connect.sid"); 
+	res.redirect("https://accounts.google.com/logout'"); 
 });
 
 app.listen(PORT, () => {
