@@ -89,7 +89,7 @@ app.get(
 	})
 );
 
-app.get("/login/sucess", async (req, res) => {
+app.get("/login/success", async (req, res) => {
 	if (req.user) {
 		res.status(200).json({ message: "User Login", user: req.user });
 	} else {
@@ -97,13 +97,9 @@ app.get("/login/sucess", async (req, res) => {
 	}
 });
 
-app.get("/logout", (req, res, next) => {
-	req.logout(function (err) {
-		if (err) {
-			return next(err);
-		}
-		res.redirect("http://localhost:5173/");
-	});
+app.get("/logout", (req, res) => {
+	req.logout();
+	res.redirect("http://localhost:5173/");
 });
 
 app.listen(PORT, () => {

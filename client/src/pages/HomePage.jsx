@@ -10,6 +10,7 @@ import {
 	MenuIcon,
 	XIcon,
 	OfficeBuildingIcon,
+	PlusCircleIcon,
 } from "@heroicons/react/outline";
 
 import { Link, Outlet } from "react-router-dom";
@@ -23,6 +24,7 @@ export default function Example() {
 
 	const navigation = [
 		{ name: "Dashboard", to: "", icon: HomeIcon, current: true },
+		{ name: "New Search", to: "create", icon: PlusCircleIcon, current: true },
 		{ name: "History", to: "history", icon: FolderIcon, current: false },
 		{ name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
 		{
