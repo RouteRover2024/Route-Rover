@@ -1,13 +1,13 @@
 // App.jsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignIn from "./pages/SignIn";
-import HomePage from "./pages/HomePage";
-import Dashboard from "./pages/Dashboard";
-import History from "./pages/History";
-import Reports from "./pages/Reports";
-import Addresses from "./pages/Addresses";
-import Settings from "./pages/Settings";
+import SignIn from "./SignIn";
+import HomePage from "./HomePage";
+import Dashboard from "./Dashboard";
+import History from "./History";
+import Reports from "./Reports";
+import Addresses from "./Addresses";
+import Settings from "./Settings";
 
 function App() {
 	return (

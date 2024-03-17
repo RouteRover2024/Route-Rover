@@ -1,24 +1,37 @@
-export default function Example() {
+import { useNavigate } from "react-router-dom";
+import RouteRover from "../assets/RouteRoverLogoText.svg";
+
+export default function SignIn() {
+	const Navigate = useNavigate();
+
 	const loginwithgoogle = () => {
 		window.open("http://localhost:6005/auth/google/callback", "_self");
 	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		// Your form submission logic here
+		// For now, just redirect to the homepage
+		Navigate("/home/");
+	};
+
 	return (
 		<>
 			<div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 				<div className="sm:mx-auto sm:w-full sm:max-w-md">
 					<img
 						className="mx-auto h-12 w-auto"
-						src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-						alt="Workflow"
+						src={RouteRover}
+						alt="RouteRover"
 					/>
 					<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
 						Sign in to your account
 					</h2>
 				</div>
 
-				<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+				<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md shadow-2xl rounded-lg">
 					<div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-						<form className="space-y-6" action="#" method="POST">
+						<form className="space-y-6" onSubmit={handleSubmit}>
 							<div>
 								<label
 									htmlFor="email"
@@ -66,7 +79,6 @@ export default function Example() {
 								</button>
 							</div>
 						</form>
-
 						<div className="mt-6">
 							<div className="relative">
 								<div className="absolute inset-0 flex items-center">

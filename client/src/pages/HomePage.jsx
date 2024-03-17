@@ -1,5 +1,7 @@
+// HomePage.jsx
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import RouteRover from "../assets/RouteRoverLogoText.svg";
 
 import {
 	ChartBarIcon,
@@ -10,39 +12,7 @@ import {
 	OfficeBuildingIcon,
 } from "@heroicons/react/outline";
 
-const navigation = [
-	{ name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-	{ name: "History", href: "#", icon: FolderIcon, current: false },
-	{ name: "Reports", href: "#", icon: ChartBarIcon, current: false },
-	{
-		name: "Addresses",
-		href: "#",
-		icon: OfficeBuildingIcon,
-		current: false,
-	},
-];
-
-const routes = [
-	{
-		starting_point: "Vashi",
-		destination: "Kharghar",
-		date: "1st January 2024",
-		mode_of_travel: "Cab",
-	},
-	{
-		starting_point: "Santakruz",
-		destination: "Andheri",
-		date: "1st January 2024",
-		mode_of_travel: "Train",
-	},
-	{
-		starting_point: "Versova",
-		destination: "Marol Naka",
-		date: "3rd March 2024",
-		mode_of_travel: "Metro",
-	},
-	// More routes...
-];
+import { Link, Outlet } from "react-router-dom";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
@@ -50,6 +20,18 @@ function classNames(...classes) {
 
 export default function Example() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+
+	const navigation = [
+		{ name: "Dashboard", to: "", icon: HomeIcon, current: true },
+		{ name: "History", to: "history", icon: FolderIcon, current: false },
+		{ name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
+		{
+			name: "Addresses",
+			to: "addresses",
+			icon: OfficeBuildingIcon,
+			current: false,
+		},
+	];
 
 	return (
 		<>
@@ -112,19 +94,17 @@ export default function Example() {
 									<div className="flex-shrink-0 flex items-center px-4">
 										<img
 											className="h-8 w-auto"
-											src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
-											alt="Workflow"
+											src={RouteRover}
+											alt="RouteRover"
 										/>
 									</div>
 									<nav className="mt-5 px-2 space-y-1">
 										{navigation.map((item) => (
-											<a
+											<Link
 												key={item.name}
-												href={item.href}
+												to={item.to}
 												className={classNames(
-													item.current
-														? "bg-indigo-800 text-white"
-														: "text-white hover:bg-indigo-600 hover:bg-opacity-75",
+													"text-white hover:bg-indigo-600 hover:bg-opacity-75",
 													"group flex items-center px-2 py-2 text-base font-medium rounded-md"
 												)}
 											>
@@ -133,13 +113,13 @@ export default function Example() {
 													aria-hidden="true"
 												/>
 												{item.name}
-											</a>
+											</Link>
 										))}
 									</nav>
 								</div>
 								<div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
-									<a
-										href="#"
+									<Link
+										to="settings"
 										className="flex-shrink-0 group block"
 									>
 										<div className="flex items-center">
@@ -159,7 +139,7 @@ export default function Example() {
 												</p>
 											</div>
 										</div>
-									</a>
+									</Link>
 								</div>
 							</div>
 						</Transition.Child>
@@ -172,39 +152,37 @@ export default function Example() {
 				{/* Static sidebar for desktop */}
 				<div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
 					{/* Sidebar component, swap this element with another sidebar if you like */}
-					<div className="flex-1 flex flex-col min-h-0 bg-indigo-700">
+					<div className="flex-1 flex flex-col min-h-0 bg-slate-700">
 						<div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
 							<div className="flex items-center flex-shrink-0 px-4">
 								<img
 									className="h-8 w-auto"
-									src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
-									alt="Workflow"
+									src={RouteRover}
+									alt="RouteRover"
 								/>
 							</div>
 							<nav className="mt-5 flex-1 px-2 space-y-1">
 								{navigation.map((item) => (
-									<a
+									<Link
 										key={item.name}
-										href={item.href}
+										to={item.to}
 										className={classNames(
-											item.current
-												? "bg-indigo-800 text-white"
-												: "text-white hover:bg-indigo-600 hover:bg-opacity-75",
+											"text-white hover:bg-slate-300 hover:bg-opacity-75",
 											"group flex items-center px-2 py-2 text-sm font-medium rounded-md"
 										)}
 									>
 										<item.icon
-											className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
+											className="mr-3 flex-shrink-0 h-6 w-6 text-slate-500"
 											aria-hidden="true"
 										/>
 										{item.name}
-									</a>
+									</Link>
 								))}
 							</nav>
 						</div>
-						<div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
-							<a
-								href="#"
+						<div className="flex-shrink-0 flex border-t border-slate-800 p-4">
+							<Link
+								to="settings"
 								className="flex-shrink-0 w-full group block"
 							>
 								<div className="flex items-center">
@@ -216,15 +194,15 @@ export default function Example() {
 										/>
 									</div>
 									<div className="ml-3">
-										<p className="text-sm font-medium text-white">
+										<p className="text-sm font-bold text-white">
 											Tom Cook
 										</p>
-										<p className="text-xs font-medium text-indigo-200 group-hover:text-white">
+										<p className="text-xs font-medium text-slate-200 group-hover:text-white">
 											View profile
 										</p>
 									</div>
 								</div>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -240,137 +218,7 @@ export default function Example() {
 						</button>
 					</div>
 					<main className="flex-1">
-						<div className="py-6">
-							<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-								<h1 className="text-3xl font-semibold text-gray-900">
-									Dashboard
-								</h1>
-							</div>
-							<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-8">
-								{/* Replace with your content */}
-								<div className="py-4">
-									<div className="px-4 sm:px-6 lg:px-8">
-										<div className="sm:flex sm:items-center">
-											<div className="sm:flex-auto">
-												<h1 className="text-xl font-semibold text-gray-900">
-													Previously Searched
-												</h1>
-												<p className="mt-2 text-sm text-gray-700">
-													A list of all the routes
-													taken previously including
-													their starting point,
-													destination, date of travel
-													and the mode of travel.
-												</p>
-											</div>
-											<div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-												<button
-													type="button"
-													className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-												>
-													Add a Journey
-												</button>
-											</div>
-										</div>
-										<div className="mt-8 flex flex-col">
-											<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-												<div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-													<div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-														<table className="min-w-full divide-y divide-gray-300">
-															<thead className="bg-gray-50">
-																<tr>
-																	<th
-																		scope="col"
-																		className="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6"
-																	>
-																		Source
-																	</th>
-																	<th
-																		scope="col"
-																		className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-																	>
-																		Destination
-																	</th>
-																	<th
-																		scope="col"
-																		className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-																	>
-																		Date
-																	</th>
-																	<th
-																		scope="col"
-																		className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-																	>
-																		Mode of
-																		Travel
-																	</th>
-																	<th
-																		scope="col"
-																		className="relative py-3 pl-3 pr-4 sm:pr-6"
-																	>
-																		<span className="sr-only">
-																			View
-																		</span>
-																	</th>
-																</tr>
-															</thead>
-															<tbody className="divide-y divide-gray-200 bg-white">
-																{routes.map(
-																	(
-																		person
-																	) => (
-																		<tr
-																			key={
-																				person.date
-																			}
-																		>
-																			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-																				{
-																					person.starting_point
-																				}
-																			</td>
-																			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-																				{
-																					person.destination
-																				}
-																			</td>
-																			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-																				{
-																					person.date
-																				}
-																			</td>
-																			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-																				{
-																					person.mode_of_travel
-																				}
-																			</td>
-																			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-																				<a
-																					href="#"
-																					className="text-indigo-600 hover:text-indigo-900"
-																				>
-																					View
-																					<span className="sr-only">
-																						,
-																						{
-																							person.starting_point
-																						}
-																					</span>
-																				</a>
-																			</td>
-																		</tr>
-																	)
-																)}
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<Outlet />
 					</main>
 				</div>
 			</div>
