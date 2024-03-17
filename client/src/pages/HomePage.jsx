@@ -62,7 +62,7 @@ export default function Example() {
 							leaveFrom="translate-x-0"
 							leaveTo="-translate-x-full"
 						>
-							<div className="relative flex-1 flex flex-col max-w-xs w-full bg-indigo-700">
+							<div className="relative flex-1 flex flex-col max-w-xs w-full bg-slate-700">
 								<Transition.Child
 									as={Fragment}
 									enter="ease-in-out duration-300"
@@ -104,12 +104,12 @@ export default function Example() {
 												key={item.name}
 												to={item.to}
 												className={classNames(
-													"text-white hover:bg-indigo-600 hover:bg-opacity-75",
+													"text-white hover:bg-slate-500 hover:bg-opacity-75",
 													"group flex items-center px-2 py-2 text-base font-medium rounded-md"
 												)}
 											>
 												<item.icon
-													className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
+													className="mr-4 flex-shrink-0 h-6 w-6 text-slate-500"
 													aria-hidden="true"
 												/>
 												{item.name}
@@ -117,7 +117,7 @@ export default function Example() {
 										))}
 									</nav>
 								</div>
-								<div className="flex-shrink-0 flex border-t border-indigo-800 p-4">
+								<div className="flex-shrink-0 flex border-t border-slate-300 p-4">
 									<Link
 										to="settings"
 										className="flex-shrink-0 group block"
@@ -134,7 +134,7 @@ export default function Example() {
 												<p className="text-base font-medium text-white">
 													Tom Cook
 												</p>
-												<p className="text-sm font-medium text-indigo-200 group-hover:text-white">
+												<p className="text-sm font-medium text-slate-300 group-hover:text-white">
 													View profile
 												</p>
 											</div>
@@ -167,7 +167,7 @@ export default function Example() {
 										key={item.name}
 										to={item.to}
 										className={classNames(
-											"text-white hover:bg-slate-300 hover:bg-opacity-75",
+											"text-white hover:bg-slate-500 hover:bg-opacity-75",
 											"group flex items-center px-2 py-2 text-sm font-medium rounded-md"
 										)}
 									>
@@ -180,7 +180,7 @@ export default function Example() {
 								))}
 							</nav>
 						</div>
-						<div className="flex-shrink-0 flex border-t border-slate-800 p-4">
+						<div className="flex-shrink-0 flex border-t border-slate-300 p-4">
 							<Link
 								to="settings"
 								className="flex-shrink-0 w-full group block"
@@ -197,7 +197,7 @@ export default function Example() {
 										<p className="text-sm font-bold text-white">
 											Tom Cook
 										</p>
-										<p className="text-xs font-medium text-slate-200 group-hover:text-white">
+										<p className="text-xs font-medium text-slate-300 group-hover:text-white">
 											View profile
 										</p>
 									</div>
