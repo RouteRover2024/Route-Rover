@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
 	:root {
 		--full-width: calc(100dvw - 6px);
@@ -49,17 +50,4 @@
 		--input: 217.2 32.6% 17.5%;
 		--ring: 224.3 76.3% 48%;
 	}
-}
-
-@layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply bg-background text-foreground;
-	}
-}
-
-html {
-	scroll-behavior: smooth;
 }

@@ -84,26 +84,28 @@ app.get(
 app.get(
 	"/auth/google/callback",
 	passport.authenticate("google", {
-		successRedirect: "http://localhost:5173/dashboard",
-		failureRedirect: "http://localhost:5173/login",
+		successRedirect: "http://localhost:5173/home/",
+		failureRedirect: "http://localhost:5173/",
 	})
 );
 
-app.get("/login/sucess", async (req, res) => {
+app.get("/login/success", async (req, res) => {
 	if (req.user) {
-		res.status(200).json({ message: "user Login", user: req.user });
+		res.status(200).json({ message: "User Login", user: req.user });
 	} else {
 		res.status(400).json({ message: "Not Authorized" });
 	}
 });
 
-app.get("/logout", (req, res, next) => {
-	req.logout(function (err) {
-		if (err) {
-			return next(err);
-		}
-		res.redirect("http://localhost:5173");
-	});
+app.use((req, res, next) => {
+	res.setHeader("Cache-Control", "no-store");
+	next();
+});
+
+app.get("/logout", (req, res) => {
+	req.logout(); 
+	res.clearCookie("connect.sid"); 
+	res.redirect("https://accounts.google.com/logout"); 
 });
 
 app.listen(PORT, () => {

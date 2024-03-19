@@ -1,23 +1,23 @@
 // App.jsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignIn from "./pages/SignIn";
-import HomePage from "./pages/HomePage";
-import Dashboard from "./pages/Dashboard";
-import SearchMap from "./pages/SearchMap";
-import History from "./pages/History";
-import Reports from "./pages/Reports";
-import Addresses from "./pages/Addresses";
-import Settings from "./pages/Settings";
+import SignIn from "./SignIn";
+import HomePage from "./HomePage";
+import Dashboard from "./Dashboard";
+import History from "./History";
+import Reports from "./Reports";
+import Addresses from "./Addresses";
+import Settings from "./Settings";
+import Error from "./Error";
 
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route exact path="/" element={<SignIn />} />
+				<Route exact path="/NotFound" element={<Error />} />
 				<Route path="/home" element={<HomePage />}>
 					<Route path="" element={<Dashboard />} />
-					<Route path="create" element={<SearchMap />} />
 					<Route path="history" element={<History />} />
 					<Route path="reports" element={<Reports />} />
 					<Route path="addresses" element={<Addresses />} />

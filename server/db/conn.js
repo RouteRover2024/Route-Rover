@@ -7,8 +7,8 @@ mongoose
 		useNewUrlParser: true,
 	})
 	.then(() => {
-		console.log("connection successful");
+		console.log("Connection successful");
 	})
 	.catch((err) => {
-		console.log("no connection", err);
+		console.log("No connection", err);
 	});
