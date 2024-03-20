@@ -14,7 +14,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.18",
-    "@heroicons/react": "^2.1.1",
+    "@heroicons/react": "^1.0.6",
     "@react-google-maps/api": "^2.19.3",
     "aos": "^2.3.4",
     "axios": "^1.6.7",
