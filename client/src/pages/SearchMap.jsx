@@ -28,10 +28,49 @@ function debounce(func, delay) {
 	};
 }
 
+function renderVehicleType(vehicleType) {
+    switch (vehicleType) {
+        case "RAIL":
+            return "Rail";
+        case "METRO_RAIL":
+            return "Metro";
+        case "SUBWAY":
+            return "Underground light rail";
+        case "TRAM":
+            return "Above ground light rail";
+        case "MONORAIL":
+            return "Monorail";
+        case "HEAVY_RAIL":
+            return "Local train";
+        case "COMMUTER_TRAIN":
+            return "Commuter rail";
+        case "HIGH_SPEED_TRAIN":
+            return "High speed train";
+        case "BUS":
+            return "Bus";
+        case "INTERCITY_BUS":
+            return "Intercity bus";
+        case "TROLLEYBUS":
+            return "Trolleybus";
+        case "SHARE_TAXI":
+            return "Share taxi";
+        case "FERRY":
+            return "Ferry";
+        case "CABLE_CAR":
+            return "Cable car";
+        case "GONDOLA_LIFT":
+            return "Aerial cable car";
+        case "FUNICULAR":
+            return "Funicular";
+        default:
+            return "Other";
+    }
+}
+
 
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "",
+		// googleMapsApiKey: "",
 		libraries: libraries,
 	});
 
@@ -76,27 +115,37 @@ function SearchMap() {
 		setTravelMode(event.target.value);
 	};
 
-	
+
 	async function calculateRoute() {
 		if (!originRef.current.value || !destinationRef.current.value) {
 			return;
 		}
-	
+
 		try {
 			const directionsService = new google.maps.DirectionsService();
 			const results = await directionsService.route({
 				origin: originRef.current.value,
 				destination: destinationRef.current.value,
 				travelMode: travelMode,
+				provideRouteAlternatives: true, // Set to true to provide alternative routes
+				avoidFerries: false,
+				avoidHighways: false,
+				avoidTolls: false,
 			});
-	
+
 			if (results.status === "OK") {
 				setDirectionsResponse(results);
 				setDistance(results.routes[0].legs[0].distance.text);
 				setDuration(results.routes[0].legs[0].duration.text);
 				console.log(results);
-				const transitOptions = extractTransitOptions(results);
-				setTransitOptions(transitOptions);
+				// Extract transit options if the travel mode is transit
+				if (travelMode === "TRANSIT") {
+					const transitOptions = extractTransitOptions(results);
+					setTransitOptions(transitOptions);
+				} else {
+					// Clear transit options if the travel mode is not transit
+					setTransitOptions([]);
+				}
 			} else {
 				// Handle error cases, e.g., route not found
 				console.error("Error fetching route:", results.status);
@@ -114,29 +163,39 @@ function SearchMap() {
 			setTransitOptions([]);
 		}
 	}
-	
-	
+
+
 	function extractTransitOptions(directionsResponse) {
 		const routes = directionsResponse.routes;
 		let options = [];
-
+	
 		routes.forEach((route) => {
 			const legs = route.legs;
 			legs.forEach((leg) => {
-				const steps = leg.steps;
+				const steps = leg.steps; // Initialize steps here
+				console.log(steps); // Move this line here
 				steps.forEach((step) => {
 					if (step.transit && step.transit.line && step.transit.line.vehicle) {
 						const vehicleType = step.transit.line.vehicle.type;
-						options.push(vehicleType);
+						const departureTime = new Date(step.transit.departure_time.value * 1000);
+						const arrivalTime = new Date(step.transit.arrival_time.value * 1000);
+						const routingPreference = step.transit.routing_preference;
+						options.push({
+							vehicleType: vehicleType,
+							departureTime: departureTime,
+							arrivalTime: arrivalTime,
+							routingPreference: routingPreference,
+							duration: steps.duration,
+							instructions: steps.instructions,
+						});
 					}
 				});
 			});
 		});
-
-		// Filter out duplicate options
-		options = [...new Set(options)];
+	
 		return options;
 	}
+	
 
 	function clearRoute() {
 		setDirectionsResponse(null);
@@ -252,27 +311,31 @@ function SearchMap() {
 					</div>
 				</div>
 				{/* Transit options */}
+				{/* Transit options */}
 				<div className="p-2 sm:m-4">
 					{transitOptions.length > 0 && (
 						<div>
 							<label htmlFor="transit-options" className="font-semibold">
 								Transit Options:
 							</label>
-							<select
+							<div
 								id="transit-options"
-								value={transitOptions[0]} // Set the selected option to the first one by default
 								onChange={(e) => console.log("Selected transit option:", e.target.value)}
-								className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
-							>
+								className="p-2 sm:m-4"							>
 								{transitOptions.map((option, index) => (
-									<option key={index} value={option}>
-										{option}
+									<option key={index} value={index}>
+										{`Departure Time: ${option.departureTime.toLocaleString()},
+										  Arrival Time: ${option.arrivalTime.toLocaleString()}
+										  Mode: ${renderVehicleType(option.vehicleType)}
+										
+										`}
 									</option>
 								))}
-							</select>
+							</div>
 						</div>
 					)}
 				</div>
+
 			</div>
 		</div>
 	);
