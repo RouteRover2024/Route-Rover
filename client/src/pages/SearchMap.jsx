@@ -29,48 +29,48 @@ function debounce(func, delay) {
 }
 
 function renderVehicleType(vehicleType) {
-    switch (vehicleType) {
-        case "RAIL":
-            return "Rail";
-        case "METRO_RAIL":
-            return "Metro";
-        case "SUBWAY":
-            return "Underground light rail";
-        case "TRAM":
-            return "Above ground light rail";
-        case "MONORAIL":
-            return "Monorail";
-        case "HEAVY_RAIL":
-            return "Local train";
-        case "COMMUTER_TRAIN":
-            return "Commuter rail";
-        case "HIGH_SPEED_TRAIN":
-            return "High speed train";
-        case "BUS":
-            return "Bus";
-        case "INTERCITY_BUS":
-            return "Intercity bus";
-        case "TROLLEYBUS":
-            return "Trolleybus";
-        case "SHARE_TAXI":
-            return "Share taxi";
-        case "FERRY":
-            return "Ferry";
-        case "CABLE_CAR":
-            return "Cable car";
-        case "GONDOLA_LIFT":
-            return "Aerial cable car";
-        case "FUNICULAR":
-            return "Funicular";
-        default:
-            return "Other";
-    }
+	switch (vehicleType) {
+		case "RAIL":
+			return "Rail";
+		case "METRO_RAIL":
+			return "Metro";
+		case "SUBWAY":
+			return "Underground light rail";
+		case "TRAM":
+			return "Above ground light rail";
+		case "MONORAIL":
+			return "Monorail";
+		case "HEAVY_RAIL":
+			return "Local train";
+		case "COMMUTER_TRAIN":
+			return "Commuter rail";
+		case "HIGH_SPEED_TRAIN":
+			return "High speed train";
+		case "BUS":
+			return "Bus";
+		case "INTERCITY_BUS":
+			return "Intercity bus";
+		case "TROLLEYBUS":
+			return "Trolleybus";
+		case "SHARE_TAXI":
+			return "Share taxi";
+		case "FERRY":
+			return "Ferry";
+		case "CABLE_CAR":
+			return "Cable car";
+		case "GONDOLA_LIFT":
+			return "Aerial cable car";
+		case "FUNICULAR":
+			return "Funicular";
+		default:
+			return "Other";
+	}
 }
 
 
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		// googleMapsApiKey: "",
+		googleMapsApiKey: "api_key",
 		libraries: libraries,
 	});
 
@@ -128,9 +128,9 @@ function SearchMap() {
 				destination: destinationRef.current.value,
 				travelMode: travelMode,
 				provideRouteAlternatives: true, // Set to true to provide alternative routes
-				avoidFerries: false,
-				avoidHighways: false,
-				avoidTolls: false,
+				avoidFerries: true,
+				avoidHighways: true,
+				avoidTolls: true,
 			});
 
 			if (results.status === "OK") {
@@ -168,7 +168,7 @@ function SearchMap() {
 	function extractTransitOptions(directionsResponse) {
 		const routes = directionsResponse.routes;
 		let options = [];
-	
+
 		routes.forEach((route) => {
 			const legs = route.legs;
 			legs.forEach((leg) => {
@@ -177,8 +177,8 @@ function SearchMap() {
 				steps.forEach((step) => {
 					if (step.transit && step.transit.line && step.transit.line.vehicle) {
 						const vehicleType = step.transit.line.vehicle.type;
-						const departureTime = new Date(step.transit.departure_time.value * 1000);
-						const arrivalTime = new Date(step.transit.arrival_time.value * 1000);
+						const departureTime = new Date(step.transit.departure_time.value);
+						const arrivalTime = new Date(step.transit.arrival_time.value);
 						const routingPreference = step.transit.routing_preference;
 						options.push({
 							vehicleType: vehicleType,
@@ -192,10 +192,10 @@ function SearchMap() {
 				});
 			});
 		});
-	
+
 		return options;
 	}
-	
+
 
 	function clearRoute() {
 		setDirectionsResponse(null);
@@ -311,7 +311,6 @@ function SearchMap() {
 					</div>
 				</div>
 				{/* Transit options */}
-				{/* Transit options */}
 				<div className="p-2 sm:m-4">
 					{transitOptions.length > 0 && (
 						<div>
@@ -324,7 +323,8 @@ function SearchMap() {
 								className="p-2 sm:m-4"							>
 								{transitOptions.map((option, index) => (
 									<option key={index} value={index}>
-										{`Departure Time: ${option.departureTime.toLocaleString()},
+										{`
+										Departure Time: ${option.departureTime.toLocaleString()},
 										  Arrival Time: ${option.arrivalTime.toLocaleString()}
 										  Mode: ${renderVehicleType(option.vehicleType)}
 										
