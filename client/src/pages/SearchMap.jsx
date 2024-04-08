@@ -15,11 +15,11 @@ import {
 } from "@react-google-maps/api";
 
 const center = { lat: 48.8584, lng: 2.2945 };
-
+const libraries = ["places"];
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "api_key",
-		libraries: ["places"],
+		googleMapsApiKey: "AIzaSyDjz6bjlVwYYVBy6JAIEFoKbGtQ8yiKAQU",
+		libraries: libraries,
 	});
 
 	const [map, setMap] = useState(null);
@@ -38,6 +38,7 @@ function SearchMap() {
 			});
 		}
 	}, []);
+
 
 	if (!isLoaded) {
 		return <div>Loading...</div>;
