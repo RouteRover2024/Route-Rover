@@ -35,7 +35,7 @@ function renderVehicleType(vehicleType) {
 		case "METRO_RAIL":
 			return "Metro";
 		case "SUBWAY":
-			return "Underground light rail";
+			return "Metro";
 		case "TRAM":
 			return "Above ground light rail";
 		case "MONORAIL":
