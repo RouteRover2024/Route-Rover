@@ -30,7 +30,7 @@ function debounce(func, delay) {
 
 function SearchMap() {
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "api_key",
+         googleMapsApiKey: "",
         libraries: libraries,
     });
 
@@ -38,6 +38,7 @@ function SearchMap() {
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [distance, setDistance] = useState("");
     const [duration, setDuration] = useState("");
+	const [travelMode, setTravelMode] = useState("DRIVING"); // Default travel mode is driving
     const originRef = useRef();
     const destinationRef = useRef();
 	
@@ -69,6 +70,10 @@ function SearchMap() {
         debouncedSearch(event.target.value);
     };
 
+	const handleTravelModeChange = (event) => {
+        setTravelMode(event.target.value);
+    };
+
     async function calculateRoute() {
         if (!originRef.current.value || !destinationRef.current.value) {
             return;
@@ -78,8 +83,9 @@ function SearchMap() {
         const results = await directionsService.route({
             origin: originRef.current.value,
             destination: destinationRef.current.value,
-            travelMode: google.maps.TravelMode.DRIVING,
+            travelMode: travelMode,
         });
+		console.log(travelMode);
 
         setDirectionsResponse(results);
         setDistance(results.routes[0].legs[0].distance.text);
@@ -147,6 +153,19 @@ function SearchMap() {
                         <div className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
                             <FaRoad />
                         </div>
+                    <span className="flex flex-row gap-4 items-center">
+                        <div className="font-semibold">Select Travel Mode:</div>
+                        <select
+                            value={travelMode}
+                            onChange={handleTravelModeChange}
+                            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                        >
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLE">Cycling</option>
+                            <option value="TRANSIT">Transit</option>
+                        </select>
+                    </span>
                         <div className="font-semibold">
                             Distance: {distance}
                         </div>
