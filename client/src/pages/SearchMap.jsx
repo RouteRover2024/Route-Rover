@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+// import { gmapkey } from "../../../server/app";
 import {
 	FaMapMarkerAlt,
 	FaRoad,
@@ -72,7 +73,7 @@ function renderVehicleType(vehicleType) {
 
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey:"api_key_here" ,
+		googleMapsApiKey: "api_key",
 		libraries: libraries,
 	});
 
