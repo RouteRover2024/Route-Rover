@@ -25,7 +25,6 @@ export default function Example() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [userdata, setUserdata] = useState({});
 
-	console.log("Response", userdata);
 
 	const getUser = async () => {
 		try {
