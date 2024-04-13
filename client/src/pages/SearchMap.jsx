@@ -13,6 +13,7 @@ import {
 	DirectionsRenderer,
 } from "@react-google-maps/api";
 
+
 const center = { lat: 48.8584, lng: 2.2945 };
 
 const libraries = ["places"];
@@ -66,9 +67,12 @@ function renderVehicleType(vehicleType) {
 	}
 }
 
+
+
+
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "api",
+		googleMapsApiKey:"api_key_here" ,
 		libraries: libraries,
 	});
 
