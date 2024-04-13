@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
 	FaMapMarkerAlt,
 	FaRoad,
@@ -10,7 +10,6 @@ import {
 	GoogleMap,
 	useJsApiLoader,
 	Marker,
-	// Autocomplete,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
 
@@ -67,10 +66,9 @@ function renderVehicleType(vehicleType) {
 	}
 }
 
-
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "api-key-here",
+		googleMapsApiKey: "api",
 		libraries: libraries,
 	});
 
@@ -79,8 +77,7 @@ function SearchMap() {
 	const [routesInfo, setRoutesInfo] = useState([]);
 	const [transitOptions, setTransitOptions] = useState([]);
 	const [selectedRouteIndex, setSelectedRouteIndex] = useState(0);
-
-	const [travelMode, setTravelMode] = useState("DRIVING"); // Default travel mode is driving
+	const [travelMode, setTravelMode] = useState("DRIVING");
 	const originRef = useRef();
 	const destinationRef = useRef();
 
@@ -99,9 +96,7 @@ function SearchMap() {
 	}
 
 	const debouncedSearch = debounce((searchTerm) => {
-		// Perform the search or API call with searchTerm
 		console.log("Searching with term:", searchTerm);
-
 	}, 700);
 
 	const handleOriginInputChange = (event) => {
@@ -116,7 +111,6 @@ function SearchMap() {
 		setTravelMode(event.target.value);
 	};
 
-
 	async function calculateRoute() {
 		if (!originRef.current.value || !destinationRef.current.value) {
 			return;
@@ -128,7 +122,7 @@ function SearchMap() {
 				origin: originRef.current.value,
 				destination: destinationRef.current.value,
 				travelMode: travelMode,
-				provideRouteAlternatives: true, // Set to true to provide alternative routes
+				provideRouteAlternatives: true,
 				avoidFerries: false,
 				avoidHighways: false,
 				avoidTolls: false,
@@ -145,28 +139,23 @@ function SearchMap() {
 				}));
 				setRoutesInfo(routesInfo);
 
-				// Extract transit options if the travel mode is transit
 				if (travelMode === "TRANSIT") {
 					const transitOptions = extractTransitOptions(results);
 					setTransitOptions(transitOptions);
 				} else {
-					// Clear transit options if the travel mode is not transit
 					setTransitOptions([]);
 				}
 			} else {
-				// Handle error cases, e.g., route not found
 				console.error("Error fetching route:", results.status);
 				setDirectionsResponse(null);
 				setTransitOptions([]);
 			}
 		} catch (error) {
-			// Handle any other errors that occur during route calculation
 			console.error("An error occurred during route calculation:", error);
 			setDirectionsResponse(null);
 			setTransitOptions([]);
 		}
 	}
-
 
 	function extractTransitOptions(directionsResponse) {
 		const routes = directionsResponse.routes;
@@ -175,21 +164,18 @@ function SearchMap() {
 		routes.forEach((route) => {
 			const legs = route.legs;
 			legs.forEach((leg) => {
-				const steps = leg.steps; // Initialize steps here
-				console.log(steps); // Move this line here
+				const steps = leg.steps;
 				steps.forEach((step) => {
 					if (step.transit && step.transit.line && step.transit.line.vehicle) {
 						const vehicleType = step.transit.line.vehicle.type;
 						const departureTime = new Date(step.transit.departure_time.value);
 						const arrivalTime = new Date(step.transit.arrival_time.value);
-						const routingPreference = step.transit.routing_preference;
+						const instructions = step.instructions;
 						options.push({
 							vehicleType: vehicleType,
 							departureTime: departureTime,
 							arrivalTime: arrivalTime,
-							routingPreference: routingPreference,
-							duration: steps.duration,
-							instructions: steps.instructions,
+							instructions: instructions,
 						});
 					}
 				});
@@ -198,7 +184,6 @@ function SearchMap() {
 
 		return options;
 	}
-
 
 	function clearRoute() {
 		setDirectionsResponse(null);
@@ -216,6 +201,7 @@ function SearchMap() {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
 				<h1 className="text-3xl font-semibold text-gray-900">New Journey</h1>
 			</div>
+			{/* Map */}
 			<div className="p-2 m-2 sm:p-4">
 				<GoogleMap
 					center={center}
@@ -227,11 +213,12 @@ function SearchMap() {
 					{directionsResponse && (
 						<DirectionsRenderer
 							directions={directionsResponse}
-							routeIndex={selectedRouteIndex} // Display the selected route on the map
+							routeIndex={selectedRouteIndex}
 						/>
 					)}
 				</GoogleMap>
 			</div>
+			{/* Inputs and Controls */}
 			<div className="p-2 sm:m-4">
 				<div className="py-2 px-2 flex flex-col sm:flex-row items-center flex-wrap w-full">
 					<div className="min-w-[300px]">
@@ -253,9 +240,9 @@ function SearchMap() {
 						/>
 					</div>
 				</div>
+				{/* Route Options */}
 				<div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-4">
-					{/* Render route options */}
-					{travelMode != 'TRANSIT' && routesInfo.map((route, index) => (
+					{routesInfo.map((route, index) => (
 						<div
 							key={index}
 							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
@@ -265,11 +252,14 @@ function SearchMap() {
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
-							<p>Summary: {route.summary}</p>
+							{travelMode != "TRANSIT" && (
+								<p>Summary: {route.summary}</p>
+							)}
+							
 						</div>
 					))}
 				</div>
-				{/* End of route options */}
+				{/* Travel Mode Selector */}
 				<div className="flex flex-row items-center gap-4 sm:gap-8 mt-4">
 					<div className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
 						<FaRoad />
@@ -283,7 +273,7 @@ function SearchMap() {
 						>
 							<option value="DRIVING">Driving</option>
 							<option value="WALKING">Walking</option>
-							<option value="BICYCLE">Cycling</option>
+							<option value="BICYCLING">Cycling</option>
 							<option value="TRANSIT">Transit</option>
 						</select>
 					</div>
@@ -294,6 +284,7 @@ function SearchMap() {
 							: ""}
 					</div>
 				</div>
+				{/* Other Controls */}
 				<div className="flex flex-row items-center gap-4 sm:gap-8 mt-4">
 					<div className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
 						<FaMapMarkerAlt />
@@ -341,24 +332,25 @@ function SearchMap() {
 						</label>
 						<div
 							id="transit-options"
-							onChange={(e) => console.log("Selected transit option:", e.target.value)}
-							className="p-2 sm:m-4"							>
+							onChange={(e) =>
+								console.log("Selected transit option:", e.target.value)
+							}
+							className="p-2 sm:m-4"
+						>
 							{transitOptions.map((option, index) => (
-								<option key={index} value={index}>
-									{`
-										Departure Time: ${option.departureTime.toLocaleString()},
-										  Arrival Time: ${option.arrivalTime.toLocaleString()}
-										  Mode: ${renderVehicleType(option.vehicleType)}
-										
-										`}
-								</option>
+								<div key={index}>
+									<p>Departure Time: {option.departureTime.toLocaleString()}</p>
+									<p>Arrival Time: {option.arrivalTime.toLocaleString()}</p>
+									<p>Mode: {renderVehicleType(option.vehicleType)}</p>
+									<p>Instructions: {option.instructions}</p>
+								</div>
 							))}
 						</div>
+
 					</div>
 				)}
 			</div>
 		</div>
-
 	);
 }
 
