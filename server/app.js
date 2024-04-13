@@ -12,7 +12,7 @@ const userdb = require("./model/userSchema");
 
 const clientid = process.env.CLIENT_ID;
 const clientsecret = process.env.CLIENT_SECRET;
-const gmapkey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
 
 app.use(
 	cors({
