@@ -15,7 +15,7 @@ import {
 } from "@react-google-maps/api";
 
 
-const center = { lat: 48.8584, lng: 2.2945 };
+const center = { lat:19.099279618216062, lng:72.86539675765846 };
 
 const libraries = ["places"];
 
@@ -138,6 +138,7 @@ function SearchMap() {
 
 				const routesInfo = results.routes.map((route, index) => ({
 					summary: route.summary,
+					fare: route?.fare,
 					distance: route.legs[0].distance.text,
 					duration: route.legs[0].duration.text,
 					index: index,
@@ -176,11 +177,13 @@ function SearchMap() {
 						const departureTime = new Date(step.transit.departure_time.value);
 						const arrivalTime = new Date(step.transit.arrival_time.value);
 						const instructions = step.instructions;
+						const fare = route.fare;
 						options.push({
 							vehicleType: vehicleType,
 							departureTime: departureTime,
 							arrivalTime: arrivalTime,
 							instructions: instructions,
+							fare: fare,
 						});
 					}
 				});
@@ -200,6 +203,10 @@ function SearchMap() {
 	function handleRouteSelect(index) {
 		setSelectedRouteIndex(index);
 	}
+
+	console.log("transitOptions", transitOptions);
+	console.log("routesInfo", routesInfo);
+	console.log("directionsResponse", directionsResponse);
 
 	return (
 		<div className="pt-6">
@@ -260,7 +267,7 @@ function SearchMap() {
 							{travelMode != "TRANSIT" && (
 								<p>Summary: {route.summary}</p>
 							)}
-							
+
 						</div>
 					))}
 				</div>
@@ -329,6 +336,7 @@ function SearchMap() {
 				</div>
 			</div>
 			{/* Transit options */}
+
 			<div className="p-2 sm:m-4">
 				{transitOptions.length > 0 && (
 					<div>
@@ -342,14 +350,23 @@ function SearchMap() {
 							}
 							className="p-2 sm:m-4"
 						>
-							{transitOptions.map((option, index) => (
-								<div key={index}>
-									<p>Departure Time: {option.departureTime.toLocaleString()}</p>
-									<p>Arrival Time: {option.arrivalTime.toLocaleString()}</p>
-									<p>Mode: {renderVehicleType(option.vehicleType)}</p>
-									<p>Instructions: {option.instructions}</p>
-								</div>
-							))}
+							{transitOptions
+								.sort((a, b) => a.departureTime - b.departureTime) // Sort by departure time
+								.slice(0, 5) // Take only the first 5 elements
+								.map((option, index) => (
+									<div key={index}>
+										<p>Departure Time: {option.departureTime.toLocaleString()}</p>
+										<p>Arrival Time: {option.arrivalTime.toLocaleString()}</p>
+										<p>Mode: {renderVehicleType(option.vehicleType)}</p>
+										<p>Instructions: {option.instructions}</p>
+										{option?.fare && (
+											<div>
+												<p>Fare: {option.fare.text}</p>
+												<p>Currency: {option.fare.currency}</p>
+											</div>
+										)}
+									</div>
+								))}
 						</div>
 
 					</div>
