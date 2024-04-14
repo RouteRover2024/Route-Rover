@@ -15,7 +15,7 @@ import {
 } from "@react-google-maps/api";
 
 
-const center = { lat:19.099279618216062, lng:72.86539675765846 };
+const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
 const libraries = ["places"];
 
@@ -73,7 +73,7 @@ function renderVehicleType(vehicleType) {
 
 function SearchMap() {
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "api_key",
+		googleMapsApiKey: "api_key_here",
 		libraries: libraries,
 	});
 
@@ -178,12 +178,16 @@ function SearchMap() {
 						const arrivalTime = new Date(step.transit.arrival_time.value);
 						const instructions = step.instructions;
 						const fare = route.fare;
+						const num_stops = step.transit.num_stops;
+						const transitLine = step.transit.line;
 						options.push({
 							vehicleType: vehicleType,
 							departureTime: departureTime,
 							arrivalTime: arrivalTime,
 							instructions: instructions,
 							fare: fare,
+							num_stops: num_stops,
+							transitLine: transitLine,
 						});
 					}
 				});
@@ -352,25 +356,60 @@ function SearchMap() {
 						>
 							{transitOptions
 								.sort((a, b) => a.departureTime - b.departureTime) // Sort by departure time
-								.slice(0, 5) // Take only the first 5 elements
+
 								.map((option, index) => (
 									<div key={index}>
 										<p>Departure Time: {option.departureTime.toLocaleString()}</p>
 										<p>Arrival Time: {option.arrivalTime.toLocaleString()}</p>
 										<p>Mode: {renderVehicleType(option.vehicleType)}</p>
 										<p>Instructions: {option.instructions}</p>
-										{option?.fare && (
+										{option?.fare && option?.num_stops && (
 											<div>
 												<p>Fare: {option.fare.text}</p>
 												<p>Currency: {option.fare.currency}</p>
+												<p>Total Number of stops: {option.num_stops}</p>
+											</div>
+										)}
+
+										{option?.transitLine.vehicle && (
+											<div>
+												<img src={option.transitLine.vehicle.icon} alt="Vehicle Icon" />
+												<p>Vehicle Type: {option.transitLine.vehicle.name}</p>
+												<p>Vehicle Name: {option.transitLine.name}</p>
 											</div>
 										)}
 									</div>
 								))}
 						</div>
-
 					</div>
 				)}
+				<div className="p-2 sm:m-4">
+					<div className="font-semibold">Transit Agencies:</div>
+					{transitOptions.length > 0 && (
+						<div>
+							{transitOptions
+								.reduce((acc, option) => {
+									const existingVehicleType = acc.find(item => item.vehicleType === option.vehicleType);								
+									if (!existingVehicleType) {
+										acc.push(option);
+										return acc;
+									}
+									return acc;
+								}, [])
+								.map((option, index) => (
+									<div key={index}>
+										<div>
+											<p>Transit Agency Name: {option?.transitLine.agencies[0].name}</p>
+											<p>Transit Agency Phone: {option?.transitLine.agencies[0].phone}</p>
+											<p>Transit Agency URL: <a href={option?.transitLine.agencies[0].url}>{option?.transitLine.agencies[0].url}</a></p>
+
+										</div>
+									</div>
+								))}
+						</div>
+					)}
+				</div>
+
 			</div>
 		</div>
 	);
