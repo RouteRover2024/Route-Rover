@@ -208,10 +208,6 @@ function SearchMap() {
 		setSelectedRouteIndex(index);
 	}
 
-	console.log("transitOptions", transitOptions);
-	console.log("routesInfo", routesInfo);
-	console.log("directionsResponse", directionsResponse);
-
 	return (
 		<div className="pt-6">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
