@@ -1,11 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 // import { gmapkey } from "../../../server/app";
-import {
-	FaMapMarkerAlt,
-	FaRoad,
-	FaTimes,
-	FaLocationArrow,
-} from "react-icons/fa";
+import { FaTimes, FaLocationArrow } from "react-icons/fa";
 
 import {
 	GoogleMap,
@@ -68,8 +63,10 @@ function renderVehicleType(vehicleType) {
 }
 
 function SearchMap() {
+	const googleMapsApiKey = import.meta.env.VITE_MAPS_API;
+
 	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: "api_key_here",
+		googleMapsApiKey: googleMapsApiKey,
 		libraries: libraries,
 	});
 
