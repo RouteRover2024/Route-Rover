@@ -69,8 +69,13 @@ function Addresses() {
 								<h1 className="text-xl font-semibold text-gray-900">
 									Save your addresses here
 								</h1>
+								<p className="mt-2 text-sm text-gray-700">
+									Enter a list of places you visit on a
+									regualar basis and we will fetch it for you
+									on the search map
+								</p>
 								{/* Input fields for addresses */}
-								<div className="mt-4">
+								<div className="mt-8">
 									<input
 										type="text"
 										placeholder="Home Address"
