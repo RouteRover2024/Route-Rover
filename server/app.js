@@ -120,14 +120,9 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
 });
 
-app.use("/api", usersRouter);
 app.use("/api", historyRouter);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Something went wrong!");
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
