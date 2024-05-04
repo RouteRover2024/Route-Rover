@@ -7,8 +7,12 @@ const userSchema = new mongoose.Schema(
 		image: String,
 		email: String,
 		history : [{
-			type: mongoose.Schema.Types.ObjectId,
-      		ref: 'history',
+			indx : Number,
+			source : String,
+			destination : String,
+			duration : String,
+			distance : String,
+			cost : Number
 		}]
 	},
 	{ timestamps: true }
