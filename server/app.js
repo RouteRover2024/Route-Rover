@@ -120,7 +120,7 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
 });
 
-app.use("/api", historyRouter);
+app.use("/api/create", historyRouter);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
