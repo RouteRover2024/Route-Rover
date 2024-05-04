@@ -1,64 +1,73 @@
-import React from "react";
 const routes = [
 	{
-		starting_point: "Vashi",
+		source: "Vashi",
 		destination: "Kharghar",
 		date: "1st January 2024",
-		mode_of_travel: "Cab",
+		duration: "1hr",
+		cost: 100,
 	},
 	{
-		starting_point: "Santacruz",
+		source: "Santacruz",
 		destination: "Andheri",
 		date: "2nd February 2024",
-		mode_of_travel: "Train",
+		duration: "1hr 7mins",
+		cost: 20,
 	},
 	{
-		starting_point: "Versova",
+		source: "Versova",
 		destination: "Marol Naka",
 		date: "3rd March 2024",
-		mode_of_travel: "Metro",
+		duration: "20mins",
+		cost: 40,
 	},
 	{
-		starting_point: "Borivali",
+		source: "Borivali",
 		destination: "Churchgate",
 		date: "4th April 2024",
-		mode_of_travel: "Local Train",
+		duration: "32mins",
+		cost: 45,
 	},
 	{
-		starting_point: "Dadar",
+		source: "Dadar",
 		destination: "CSMT",
 		date: "5th May 2024",
-		mode_of_travel: "Bus",
+		duration: "40mins",
+		cost: 25,
 	},
 	{
-		starting_point: "Thane",
+		source: "Thane",
 		destination: "Kalyan",
 		date: "6th June 2024",
-		mode_of_travel: "Auto Rickshaw",
+		duration: "1hr",
+		cost: 80,
 	},
 	{
-		starting_point: "Goregaon",
+		source: "Goregaon",
 		destination: "Malad",
 		date: "7th July 2024",
-		mode_of_travel: "Walking",
+		duration: "40mins",
+		cost: 40,
 	},
 	{
-		starting_point: "Kurla",
+		source: "Kurla",
 		destination: "Ghatkopar",
 		date: "8th August 2024",
-		mode_of_travel: "Bicycle",
+		duration: "10mins",
+		cost: 10,
 	},
 	{
-		starting_point: "Mumbai Central",
+		source: "Mumbai Central",
 		destination: "Mahalaxmi",
 		date: "9th September 2024",
-		mode_of_travel: "Rickshaw",
+		duration: "30mins",
+		cost: 50,
 	},
 	{
-		starting_point: "Wadala",
+		source: "Wadala",
 		destination: "Dadar",
 		date: "10th October 2024",
-		mode_of_travel: "Taxi",
+		duration: "10mins",
+		cost: 25,
 	},
 ];
 
@@ -114,15 +123,13 @@ function History() {
 														scope="col"
 														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
 													>
-														Mode of Travel
+														Duration
 													</th>
 													<th
 														scope="col"
-														className="relative py-3 pl-3 pr-4 sm:pr-6"
+														className="px-3 py-3 pr-6 text-right text-xs font-medium uppercase tracking-wide text-gray-500"
 													>
-														<span className="sr-only">
-															View
-														</span>
+														Cost
 													</th>
 												</tr>
 											</thead>
@@ -130,9 +137,7 @@ function History() {
 												{routes.map((person) => (
 													<tr key={person.date}>
 														<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-															{
-																person.starting_point
-															}
+															{person.source}
 														</td>
 														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 															{person.destination}
@@ -141,23 +146,10 @@ function History() {
 															{person.date}
 														</td>
 														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-															{
-																person.mode_of_travel
-															}
+															{person.duration}
 														</td>
-														<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-															<a
-																href="#"
-																className="text-indigo-600 hover:text-indigo-900"
-															>
-																View
-																<span className="sr-only">
-																	,
-																	{
-																		person.starting_point
-																	}
-																</span>
-															</a>
+														<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm text-green-500 font-medium sm:pr-6">
+															{person.cost}
 														</td>
 													</tr>
 												))}

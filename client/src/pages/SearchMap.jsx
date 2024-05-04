@@ -79,7 +79,20 @@ function SearchMap() {
 	const originRef = useRef();
 	const destinationRef = useRef();
 
+	// State to hold saved addresses
+	const [savedAddresses, setSavedAddresses] = useState([]);
+
 	useEffect(() => {
+		const addressesData = JSON.parse(localStorage.getItem("addresses"));
+		if (addressesData) {
+			const addressesArray = [];
+			for (const key in addressesData) {
+				if (Object.hasOwnProperty.call(addressesData, key)) {
+					addressesArray.push(addressesData[key]);
+				}
+			}
+			setSavedAddresses(addressesArray);
+		}
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				const { latitude, longitude } = position.coords;
@@ -245,14 +258,27 @@ function SearchMap() {
 						ref={originRef}
 						className="w-full block rounded-md focus:ring-slate-500 focus:border-slate-500 text-sm px-4 py-2 my-1 border-zinc-300 border-2 font-bold font-mono"
 						onChange={handleOriginInputChange}
+						list="origin-addresses"
 					/>
+					<datalist id="origin-addresses">
+						{savedAddresses.map((address, index) => (
+							<option key={index} value={address} />
+						))}
+					</datalist>
+					{/* Autocomplete for destination input */}
 					<input
 						type="text"
 						placeholder="Destination"
 						ref={destinationRef}
 						className="w-full block rounded-md focus:ring-slate-500 focus:border-slate-500 text-sm px-4 py-2 my-1 border-zinc-300 border-2 font-bold font-mono"
 						onChange={handleDestinationInputChange}
+						list="destination-addresses"
 					/>
+					<datalist id="destination-addresses">
+						{savedAddresses.map((address, index) => (
+							<option key={index} value={address} />
+						))}
+					</datalist>
 					<div className="flex flex-row items-center gap-4 sm:gap-8">
 						<div className="flex flex-row gap-4 items-center">
 							<div className="font-semibold">
