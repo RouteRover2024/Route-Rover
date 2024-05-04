@@ -9,6 +9,8 @@ const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth20").Strategy;
 const userdb = require("./model/userSchema");
+const historyRouter = require("./routes/historyRouter");
+const mongoose = require("mongoose")
 
 const clientid = process.env.CLIENT_ID;
 const clientsecret = process.env.CLIENT_SECRET;
@@ -111,4 +113,21 @@ app.get("/logout", (req, res) => {
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
+});
+
+mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+app.use("/api", usersRouter);
+app.use("/api", historyRouter);
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send("Something went wrong!");
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

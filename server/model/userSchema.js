@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema(
 		displayName: String,
 		image: String,
 		email: String,
+		history : [{
+			type: mongoose.Schema.Types.ObjectId,
+      		ref: 'history',
+		}]
 	},
 	{ timestamps: true }
 );
