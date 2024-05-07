@@ -63,7 +63,7 @@ function renderVehicleType(vehicleType) {
 }
 
 function SearchMap() {
-	const googleMapsApiKey = "AIzaSyDjz6bjlVwYYVBy6JAIEFoKbGtQ8yiKAQU";
+	const googleMapsApiKey = import.meta.env.VITE_MAPS_API;
 
 	const { isLoaded } = useJsApiLoader({
 		googleMapsApiKey: googleMapsApiKey,
