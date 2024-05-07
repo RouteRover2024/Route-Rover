@@ -4,6 +4,7 @@ const routes = [
 		destination: "Kharghar",
 		date: "1st January 2024",
 		duration: "1hr",
+		distance: "20km",
 		cost: 100,
 	},
 	{
@@ -11,6 +12,7 @@ const routes = [
 		destination: "Andheri",
 		date: "2nd February 2024",
 		duration: "1hr 7mins",
+		distance: "20km",
 		cost: 20,
 	},
 	{
@@ -18,6 +20,7 @@ const routes = [
 		destination: "Marol Naka",
 		date: "3rd March 2024",
 		duration: "20mins",
+		distance: "20km",
 		cost: 40,
 	},
 	{
@@ -25,6 +28,7 @@ const routes = [
 		destination: "Churchgate",
 		date: "4th April 2024",
 		duration: "32mins",
+		distance: "20km",
 		cost: 45,
 	},
 	{
@@ -32,6 +36,7 @@ const routes = [
 		destination: "CSMT",
 		date: "5th May 2024",
 		duration: "40mins",
+		distance: "20km",
 		cost: 25,
 	},
 	{
@@ -39,6 +44,7 @@ const routes = [
 		destination: "Kalyan",
 		date: "6th June 2024",
 		duration: "1hr",
+		distance: "20km",
 		cost: 80,
 	},
 	{
@@ -46,6 +52,7 @@ const routes = [
 		destination: "Malad",
 		date: "7th July 2024",
 		duration: "40mins",
+		distance: "20km",
 		cost: 40,
 	},
 	{
@@ -53,6 +60,7 @@ const routes = [
 		destination: "Ghatkopar",
 		date: "8th August 2024",
 		duration: "10mins",
+		distance: "20km",
 		cost: 10,
 	},
 	{
@@ -60,6 +68,7 @@ const routes = [
 		destination: "Mahalaxmi",
 		date: "9th September 2024",
 		duration: "30mins",
+		distance: "20km",
 		cost: 50,
 	},
 	{
@@ -67,6 +76,7 @@ const routes = [
 		destination: "Dadar",
 		date: "10th October 2024",
 		duration: "10mins",
+		distance: "20km",
 		cost: 25,
 	},
 ];
@@ -123,17 +133,23 @@ function History() {
 														scope="col"
 														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
 													>
+														Distance
+													</th>
+													<th
+														scope="col"
+														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+													>
 														Duration
 													</th>
 													<th
 														scope="col"
-														className="px-3 py-3 pr-6 text-right text-xs font-medium uppercase tracking-wide text-gray-500"
+														className="px-3 py-3 pr-6 text-right text-xs font-medium uppercase tracking-wide text-gray-500 sm:pr-6"
 													>
 														Cost
 													</th>
 												</tr>
 											</thead>
-											<tbody className="divide-y divide-gray-200 bg-white">
+											<tbody>
 												{routes.map((person) => (
 													<tr key={person.date}>
 														<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
@@ -144,6 +160,9 @@ function History() {
 														</td>
 														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 															{person.date}
+														</td>
+														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+															{person.distance}
 														</td>
 														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 															{person.duration}
