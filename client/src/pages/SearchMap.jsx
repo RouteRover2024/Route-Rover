@@ -63,7 +63,7 @@ function renderVehicleType(vehicleType) {
 }
 
 function SearchMap() {
-	const googleMapsApiKey = import.meta.env.VITE_MAPS_API;
+	const googleMapsApiKey = "AIzaSyDjz6bjlVwYYVBy6JAIEFoKbGtQ8yiKAQU";
 
 	const { isLoaded } = useJsApiLoader({
 		googleMapsApiKey: googleMapsApiKey,
@@ -223,7 +223,7 @@ function SearchMap() {
 	}
 
 	return (
-		<div className="mt-6">
+		<div className="mt-6 ">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
 				<h1 className="text-3xl font-semibold text-gray-900">
 					New Journey
@@ -251,12 +251,12 @@ function SearchMap() {
 					</GoogleMap>
 				</div>
 				{/* Inputs and Controls */}
-				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-slate-300 rounded-md p-4">
+				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-md p-4">
 					<input
 						type="text"
 						placeholder="Origin"
 						ref={originRef}
-						className="w-full block rounded-md focus:ring-slate-500 focus:border-slate-500 text-sm px-4 py-2 my-1 border-zinc-300 border-2 font-bold font-mono"
+						className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
 						onChange={handleOriginInputChange}
 						list="origin-addresses"
 					/>
@@ -265,12 +265,12 @@ function SearchMap() {
 							<option key={index} value={address} />
 						))}
 					</datalist>
-					{/* Autocomplete for destination input */}
+
 					<input
 						type="text"
 						placeholder="Destination"
 						ref={destinationRef}
-						className="w-full block rounded-md focus:ring-slate-500 focus:border-slate-500 text-sm px-4 py-2 my-1 border-zinc-300 border-2 font-bold font-mono"
+						className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
 						onChange={handleDestinationInputChange}
 						list="destination-addresses"
 					/>
@@ -279,15 +279,16 @@ function SearchMap() {
 							<option key={index} value={address} />
 						))}
 					</datalist>
+
 					<div className="flex flex-row items-center gap-4 sm:gap-8">
 						<div className="flex flex-row gap-4 items-center">
-							<div className="font-semibold">
+							<div className="font-semibold text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
 								Select Travel Mode
 							</div>
 							<select
 								value={travelMode}
 								onChange={handleTravelModeChange}
-								className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:ring-slate-500 focus:border-slate-500 font-medium font-mono"
+								className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono"
 							>
 								<option value="DRIVING">Driving</option>
 								<option value="WALKING">Walking</option>
@@ -296,32 +297,33 @@ function SearchMap() {
 							</select>
 						</div>
 					</div>
+
 					<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
 						<button
 							type="button"
 							onClick={calculateRoute}
-							className="row-span-2 inline-flex items-center px-4 py-2 border border-green-300 shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+							className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
 						>
-							Calculate Route
+							<span className="text-white">Calculate Route</span>
 						</button>
 						<button
 							type="button"
 							onClick={clearRoute}
 							title="Clear Route"
-							className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+							className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
 						>
-							<FaTimes />
+							<FaTimes className="text-white" />
 						</button>
 						<button
 							type="button"
-							className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+							className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-purple-600 to-purple-700 hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
 							onClick={() => {
 								map.panTo(center);
 								map.setZoom(15);
 							}}
 							title="ReLocate"
 						>
-							<FaLocationArrow />
+							<FaLocationArrow className="text-white" />
 						</button>
 					</div>
 				</div>
@@ -333,11 +335,10 @@ function SearchMap() {
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${
-								selectedRouteIndex === index
-									? "bg-gray-100"
-									: "hover:bg-gray-100"
-							}`}
+							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
+								? "bg-gray-100"
+								: "hover:bg-gray-100"
+								}`}
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
@@ -363,90 +364,82 @@ function SearchMap() {
 				</div>
 
 				<hr className="border-1 border-black my-2" />
-
 				{transitOptions.length > 0 && (
 					<div>
-						<label
-							htmlFor="transit-options"
-							className="font-semibold"
-						>
-							Transit Options:
+						<label htmlFor="transit-options" className="font-semibold text-white">
+							Transit Options
 						</label>
 						<div
 							id="transit-options"
-							onChange={(e) =>
-								console.log(
-									"Selected transit option:",
-									e.target.value
-								)
-							}
-							className="p-2 sm:m-4"
+							onChange={(e) => console.log("Selected transit option:", e.target.value)}
+							className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-2"
 						>
 							{transitOptions
-								.sort(
-									(a, b) => a.departureTime - b.departureTime
-								) // Sort by departure time
-
+								.sort((a, b) => a.departureTime - b.departureTime)
 								.map((option, index) => (
-									<div key={index}>
-										<p>
-											Departure Time:{" "}
-											{option.departureTime.toLocaleString()}
-										</p>
-										<p>
-											Arrival Time:{" "}
-											{option.arrivalTime.toLocaleString()}
-										</p>
-										<p>
-											Mode:{" "}
-											{renderVehicleType(
-												option.vehicleType
-											)}
-										</p>
-										<p>
-											Instructions: {option.instructions}
-										</p>
+									<div
+										key={index}
+										className="bg-gray-700 rounded-lg shadow-lg overflow-hidden p-4"
+									>
+										{option?.transitLine.vehicle && (
+											<div className="flex items-center gap-2">
+												<img
+													src={option.transitLine.vehicle.icon}
+													alt="Vehicle Icon"
+													className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 p-1 rounded-full"
+												/>
+												<div>
+													<p className="text-white font-semibold">
+														<p>
+															Mode:{" "}
+															{renderVehicleType(
+																option.vehicleType
+															)}
+														</p>
+													</p>
+													<p className="text-gray-400 text-sm">
+														{option.transitLine?.name}
+													</p>
+												</div>
+											</div>
+										)}
+										<div className="flex items-center justify-between">
+											<span className="font-bold text-white">
+												{option.departureTime.toLocaleTimeString([], {
+													hour: "2-digit",
+													minute: "2-digit",
+												})}
+											</span>
+											<span className="font-bold text-white">
+												{option.arrivalTime.toLocaleTimeString([], {
+													hour: "2-digit",
+													minute: "2-digit",
+												})}
+											</span>
+										</div>
+										{/* <p className="text-gray-400 text-sm">
+											{renderVehicleType(option.vehicleType)}
+										</p> */}
+										<p className="text-gray-400 text-sm">{option.instructions}</p>
 										{option?.fare && option?.num_stops && (
-											<div>
-												<p>Fare: {option.fare.text}</p>
+											<div className="text-white">
 												<p>
-													Currency:{" "}
-													{option.fare.currency}
+													<span className="font-bold">{option.fare.text}</span>{" "}
+													
+
 												</p>
-												<p>
-													Total Number of stops:{" "}
-													{option.num_stops}
+												<p className="font-light text-sm">
+													Total Number of stops: {option?.num_stops}
 												</p>
 											</div>
 										)}
 
-										{option?.transitLine.vehicle && (
-											<div>
-												<img
-													src={
-														option.transitLine
-															.vehicle.icon
-													}
-													alt="Vehicle Icon"
-												/>
-												<p>
-													Vehicle Type:{" "}
-													{
-														option.transitLine
-															.vehicle.name
-													}
-												</p>
-												<p>
-													Vehicle Name:{" "}
-													{option.transitLine.name}
-												</p>
-											</div>
-										)}
 									</div>
 								))}
 						</div>
 					</div>
 				)}
+
 				<div className="p-2 sm:m-4">
 					<div className="font-semibold">Transit Agencies:</div>
 					{transitOptions.length > 0 && (
