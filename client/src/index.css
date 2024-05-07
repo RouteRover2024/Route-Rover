@@ -51,3 +51,7 @@
 		--ring: 224.3 76.3% 48%;
 	}
 }
+
+html {
+	scrollbar-width: thin;
+}
