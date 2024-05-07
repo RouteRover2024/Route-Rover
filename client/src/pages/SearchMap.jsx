@@ -76,11 +76,26 @@ function SearchMap() {
 	const [transitOptions, setTransitOptions] = useState([]);
 	const [selectedRouteIndex, setSelectedRouteIndex] = useState(0);
 	const [travelMode, setTravelMode] = useState("DRIVING");
+	// Define state for pagination
+	const [currentPageTransit, setCurrentPageTransit] = useState(1);
+	const transitPerPage = 6; // Adjust this number as per your preference
+
+	// Calculate index of the last transit option on current page
+	const indexOfLastTransit = currentPageTransit * transitPerPage;
+	// Calculate index of the first transit option on current page
+	const indexOfFirstTransit = indexOfLastTransit - transitPerPage;
+	// Get transit options for the current page
+	const currentTransitOptions = transitOptions.slice(indexOfFirstTransit, indexOfLastTransit);
+
+	// Function to handle page change for transit options
+	const paginateTransit = (pageNumber) => setCurrentPageTransit(pageNumber);
+
 	const originRef = useRef();
 	const destinationRef = useRef();
 
 	// State to hold saved addresses
 	const [savedAddresses, setSavedAddresses] = useState([]);
+
 
 	useEffect(() => {
 		const addressesData = JSON.parse(localStorage.getItem("addresses"));
@@ -374,68 +389,70 @@ function SearchMap() {
 							onChange={(e) => console.log("Selected transit option:", e.target.value)}
 							className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-2"
 						>
-							{transitOptions
-								.sort((a, b) => a.departureTime - b.departureTime)
-								.map((option, index) => (
-									<div
-										key={index}
-										className="bg-gray-700 rounded-lg shadow-lg overflow-hidden p-4"
-									>
-										{option?.transitLine.vehicle && (
-											<div className="flex items-center gap-2">
-												<img
-													src={option.transitLine.vehicle.icon}
-													alt="Vehicle Icon"
-													className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 p-1 rounded-full"
-												/>
-												<div>
-													<p className="text-white font-semibold">
-														<p>
-															Mode:{" "}
-															{renderVehicleType(
-																option.vehicleType
-															)}
-														</p>
-													</p>
-													<p className="text-gray-400 text-sm">
-														{option.transitLine?.name}
-													</p>
-												</div>
+							{currentTransitOptions.map((option, index) => (
+								<div
+									key={index}
+									className="bg-gray-700 rounded-lg shadow-lg overflow-hidden p-4"
+								>
+									{option?.transitLine.vehicle && (
+										<div className="flex items-center gap-2">
+											<img
+												src={option.transitLine.vehicle.icon}
+												alt="Vehicle Icon"
+												className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 p-1 rounded-full"
+											/>
+											<div>
+												<p className="text-white font-semibold">
+													{renderVehicleType(option.vehicleType)}
+												</p>
+												<p className="text-gray-400 text-sm">
+													{option.transitLine?.name}
+												</p>
 											</div>
-										)}
-										<div className="flex items-center justify-between">
-											<span className="font-bold text-white">
-												{option.departureTime.toLocaleTimeString([], {
-													hour: "2-digit",
-													minute: "2-digit",
-												})}
-											</span>
-											<span className="font-bold text-white">
-												{option.arrivalTime.toLocaleTimeString([], {
-													hour: "2-digit",
-													minute: "2-digit",
-												})}
-											</span>
 										</div>
-										{/* <p className="text-gray-400 text-sm">
-											{renderVehicleType(option.vehicleType)}
-										</p> */}
-										<p className="text-gray-400 text-sm">{option.instructions}</p>
-										{option?.fare && option?.num_stops && (
-											<div className="text-white">
-												<p>
-													<span className="font-bold">{option.fare.text}</span>{" "}
-													
-
-												</p>
-												<p className="font-light text-sm">
-													Total Number of stops: {option?.num_stops}
-												</p>
-											</div>
-										)}
-
+									)}
+									<div className="flex items-center justify-between">
+										<span className="font-bold text-white">
+											{option.departureTime.toLocaleTimeString([], {
+												hour: "2-digit",
+												minute: "2-digit",
+											})}
+										</span>
+										<span className="font-bold text-white">
+											{option.arrivalTime.toLocaleTimeString([], {
+												hour: "2-digit",
+												minute: "2-digit",
+											})}
+										</span>
 									</div>
+									<p className="text-gray-400 text-sm">{option.instructions}</p>
+									{option?.fare && option?.num_stops && (
+										<div className="text-white">
+											<p>
+												<span className="font-bold">{option.fare.text}</span>
+											</p>
+											<p className="font-light text-sm">
+												Total Number of stops: {option?.num_stops}
+											</p>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
+						{/* Pagination controls */}
+						<div className="flex justify-center items-center mt-4">
+							<ul className="flex list-none gap-2">
+								{Array.from({ length: Math.ceil(transitOptions.length / transitPerPage) }).map((_, index) => (
+									<li key={index}>
+										<button
+											className={`px-3 py-1 rounded-md ${currentPageTransit === index + 1 ? "bg-gray-400" : "bg-gray-200"}`}
+											onClick={() => paginateTransit(index + 1)}
+										>
+											{index + 1}
+										</button>
+									</li>
 								))}
+							</ul>
 						</div>
 					</div>
 				)}
