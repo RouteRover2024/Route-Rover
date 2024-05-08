@@ -10,6 +10,21 @@ const history = new mongoose.Schema(
             type: String,
             required: true
         },
+
+        fare:{
+            type: String,
+        },
+        
+        distance:{
+            type: String,
+            required: true
+        },
+        
+        duration:{
+            type: String,
+            required: true
+        },
+
         time:{
             type: Date,
             default: Date.now
