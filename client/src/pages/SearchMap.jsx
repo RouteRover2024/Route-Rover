@@ -14,7 +14,7 @@ import {
 const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
 const libraries = ["places"];
-
+const google = window.google
 // function debounce(func, delay) {
 // 	let timer;
 // 	return function (...args) {
