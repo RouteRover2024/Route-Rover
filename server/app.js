@@ -10,11 +10,10 @@ const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth20").Strategy;
 const userdb = require("./model/userSchema");
 const historydb = require("./model/history");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const clientid = process.env.CLIENT_ID;
 const clientsecret = process.env.CLIENT_SECRET;
-
 
 app.use(
 	cors({
@@ -106,9 +105,9 @@ app.use((req, res, next) => {
 });
 
 app.get("/logout", (req, res) => {
-	req.logout(); 
-	res.clearCookie("connect.sid"); 
-	res.redirect("https://accounts.google.com/logout"); 
+	req.logout();
+	res.clearCookie("connect.sid");
+	res.redirect("https://accounts.google.com/logout");
 });
 
 app.listen(PORT, () => {
@@ -116,37 +115,37 @@ app.listen(PORT, () => {
 });
 
 mongoose.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
 });
 
 app.post("/", async (req, res) => {
-    try {
-        const { src, dest } = req.body;
+	try {
+		const { src, dest, fare, distance, duration } = req.body;
 
-        // Create a new history document
-        const hist = new historydb({
-            src: src,
-            dest: dest
-        });
+		// Create a new history document
+		const hist = new historydb({
+			src: src,
+			dest: dest,
+			fare: fare,
+			distance: distance,
+			duration: duration,
+		});
 
-        // Save the history document to the database
-        await hist.save();
+		// Save the history document to the database
+		await hist.save();
 
-        // Fetch all data from the server
-        const allData = await historydb.find({});
-        res.json(allData); // Sending response with allData
-    } catch (error) {
-        console.error("Error:", error);
-        res.json("failed");
-        res.status(400).send(error);
-    }
+		// Fetch all data from the server
+		const allData = await historydb.find({});
+		res.json(allData); // Sending response with allData
+	} catch (error) {
+		console.error("Error:", error);
+		res.json("failed");
+		res.status(400).send(error);
+	}
 });
 
-
-
-
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send("Something went wrong!");
+	console.error(err.stack);
+	res.status(500).send("Something went wrong!");
 });
