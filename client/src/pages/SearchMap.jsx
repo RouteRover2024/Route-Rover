@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 // import { gmapkey } from "../../../server/app";
 import { FaTimes, FaLocationArrow } from "react-icons/fa";
-import axios from 'axios'
+import axios from "axios";
 import {
 	GoogleMap,
 	useJsApiLoader,
@@ -85,7 +85,10 @@ function SearchMap() {
 	// Calculate index of the first transit option on current page
 	const indexOfFirstTransit = indexOfLastTransit - transitPerPage;
 	// Get transit options for the current page
-	const currentTransitOptions = transitOptions.slice(indexOfFirstTransit, indexOfLastTransit);
+	const currentTransitOptions = transitOptions.slice(
+		indexOfFirstTransit,
+		indexOfLastTransit
+	);
 
 	// Function to handle page change for transit options
 	const paginateTransit = (pageNumber) => setCurrentPageTransit(pageNumber);
@@ -98,7 +101,6 @@ function SearchMap() {
 	const [src, setSrc] = useState("");
 	const [dest, setDest] = useState("");
 	const [data, setData] = useState([]);
-
 
 	useEffect(() => {
 		const addressesData = JSON.parse(localStorage.getItem("addresses"));
@@ -236,25 +238,44 @@ function SearchMap() {
 		destinationRef.current.value = "";
 	}
 
-
 	function handleRouteSelect(index) {
 		setSelectedRouteIndex(index);
 	}
 
 	const saveHistory = async (e) => {
 		e.preventDefault();
-		try {
-			await axios.post("http://localhost:6005/", { src, dest }).then(res => {
-				if (res.data === "failed") {
-					alert("Failed to save data!");
-				} else {
-					setData(res.data);
-				}
-			})
-		} catch (err) {
-			console.log(err);
+
+		// Check if route is available before accessing properties
+		if (routesInfo[selectedRouteIndex]) {
+			const route = routesInfo[selectedRouteIndex];
+			let { distance, duration, fare } = route;
+			fare = fare.text;
+
+			try {
+				await axios
+					.post("http://localhost:6005/", {
+						src,
+						dest,
+						fare: fare,
+						distance,
+						duration,
+					})
+					.then((res) => {
+						if (res.data === "failed") {
+							alert("Failed to save data!");
+						} else {
+							setData(res.data);
+							console.log(res.data);
+						}
+					});
+				console.log("Route saved successfully!");
+			} catch (err) {
+				console.error("Error saving route:", err);
+			}
+		} else {
+			console.error("No route selected for saving");
 		}
-	}
+	};
 	return (
 		<div className="mt-6 ">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -293,7 +314,9 @@ function SearchMap() {
 							className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
 							//onChange={handleOriginInputChange}
 							list="origin-addresses"
-							onChange={(e) => { setSrc(e.target.value) }}
+							onChange={(e) => {
+								setSrc(e.target.value);
+							}}
 						/>
 						<datalist id="origin-addresses">
 							{savedAddresses.map((address, index) => (
@@ -308,7 +331,9 @@ function SearchMap() {
 							className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
 							//onChange={handleDestinationInputChange}
 							list="destination-addresses"
-							onChange={(e) => { setDest(e.target.value) }}
+							onChange={(e) => {
+								setDest(e.target.value);
+							}}
 						/>
 						<datalist id="destination-addresses">
 							{savedAddresses.map((address, index) => (
@@ -340,7 +365,9 @@ function SearchMap() {
 								onClick={calculateRoute}
 								className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
 							>
-								<span className="text-white">Calculate Route</span>
+								<span className="text-white">
+									Calculate Route
+								</span>
 							</button>
 							<button
 								type="button"
@@ -368,7 +395,6 @@ function SearchMap() {
 							>
 								<FaLocationArrow className="text-white" />
 							</button>
-
 						</div>
 					</form>
 				</div>
@@ -380,10 +406,11 @@ function SearchMap() {
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
-								? "bg-gray-100"
-								: "hover:bg-gray-100"
-								}`}
+							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${
+								selectedRouteIndex === index
+									? "bg-gray-100"
+									: "hover:bg-gray-100"
+							}`}
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
@@ -411,12 +438,20 @@ function SearchMap() {
 				<hr className="border-1 border-black my-2" />
 				{transitOptions.length > 0 && (
 					<div>
-						<label htmlFor="transit-options" className="font-semibold text-white">
+						<label
+							htmlFor="transit-options"
+							className="font-semibold text-white"
+						>
 							Transit Options
 						</label>
 						<div
 							id="transit-options"
-							onChange={(e) => console.log("Selected transit option:", e.target.value)}
+							onChange={(e) =>
+								console.log(
+									"Selected transit option:",
+									e.target.value
+								)
+							}
 							className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-2"
 						>
 							{currentTransitOptions.map((option, index) => (
@@ -427,13 +462,18 @@ function SearchMap() {
 									{option?.transitLine.vehicle && (
 										<div className="flex items-center gap-2">
 											<img
-												src={option.transitLine.vehicle.icon}
+												src={
+													option.transitLine.vehicle
+														.icon
+												}
 												alt="Vehicle Icon"
 												className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-500 p-1 rounded-full"
 											/>
 											<div>
 												<p className="text-white font-semibold">
-													{renderVehicleType(option.vehicleType)}
+													{renderVehicleType(
+														option.vehicleType
+													)}
 												</p>
 												<p className="text-gray-400 text-sm">
 													{option.transitLine?.name}
@@ -443,26 +483,37 @@ function SearchMap() {
 									)}
 									<div className="flex items-center justify-between">
 										<span className="font-bold text-white">
-											{option.departureTime.toLocaleTimeString([], {
-												hour: "2-digit",
-												minute: "2-digit",
-											})}
+											{option.departureTime.toLocaleTimeString(
+												[],
+												{
+													hour: "2-digit",
+													minute: "2-digit",
+												}
+											)}
 										</span>
 										<span className="font-bold text-white">
-											{option.arrivalTime.toLocaleTimeString([], {
-												hour: "2-digit",
-												minute: "2-digit",
-											})}
+											{option.arrivalTime.toLocaleTimeString(
+												[],
+												{
+													hour: "2-digit",
+													minute: "2-digit",
+												}
+											)}
 										</span>
 									</div>
-									<p className="text-gray-400 text-sm">{option.instructions}</p>
+									<p className="text-gray-400 text-sm">
+										{option.instructions}
+									</p>
 									{option?.fare && option?.num_stops && (
 										<div className="text-white">
 											<p>
-												<span className="font-bold">{option.fare.text}</span>
+												<span className="font-bold">
+													{option.fare.text}
+												</span>
 											</p>
 											<p className="font-light text-sm">
-												Total Number of stops: {option?.num_stops}
+												Total Number of stops:{" "}
+												{option?.num_stops}
 											</p>
 										</div>
 									)}
@@ -472,11 +523,21 @@ function SearchMap() {
 						{/* Pagination controls */}
 						<div className="flex justify-center items-center mt-4">
 							<ul className="flex list-none gap-2">
-								{Array.from({ length: Math.ceil(transitOptions.length / transitPerPage) }).map((_, index) => (
+								{Array.from({
+									length: Math.ceil(
+										transitOptions.length / transitPerPage
+									),
+								}).map((_, index) => (
 									<li key={index}>
 										<button
-											className={`px-3 py-1 rounded-md ${currentPageTransit === index + 1 ? "bg-gray-400" : "bg-gray-200"}`}
-											onClick={() => paginateTransit(index + 1)}
+											className={`px-3 py-1 rounded-md ${
+												currentPageTransit === index + 1
+													? "bg-gray-400"
+													: "bg-gray-200"
+											}`}
+											onClick={() =>
+												paginateTransit(index + 1)
+											}
 										>
 											{index + 1}
 										</button>
@@ -542,16 +603,20 @@ function SearchMap() {
 					)}
 				</div>
 				<div>
-					{data && data.map((item, index) => (
-						<div key={index}>
-							{item && ( // Check if item is not null/undefined
-								<div>
-									<p>Source: {item.src}</p>
-									<p>Destination: {item.dest}</p>
-								</div>
-							)}
-						</div>
-					))}
+					{data &&
+						data.map((item, index) => (
+							<div key={index}>
+								{item && ( // Check if item is not null/undefined
+									<div>
+										<p>Source: {item.src}</p>
+										<p>Destination: {item.dest}</p>
+										<p>Duration:{item.duration}</p>
+										<p>Distance:{item.distance}</p>
+										<p>Fare:{item.fare}</p>
+									</div>
+								)}
+							</div>
+						))}
 				</div>
 			</div>
 		</div>
