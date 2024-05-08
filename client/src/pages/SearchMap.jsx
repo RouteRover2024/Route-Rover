@@ -1,7 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 // import { gmapkey } from "../../../server/app";
 import { FaTimes, FaLocationArrow } from "react-icons/fa";
+import { CiSaveUp1 } from "react-icons/ci";
 import axios from "axios";
+// import History from './History';
 import {
 	GoogleMap,
 	useJsApiLoader,
@@ -349,8 +351,7 @@ function SearchMap() {
 								<select
 									value={travelMode}
 									onChange={handleTravelModeChange}
-									className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono"
-								>
+									className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono appearance-none outline-none">
 									<option value="DRIVING">Driving</option>
 									<option value="WALKING">Walking</option>
 									<option value="BICYCLING">Cycling</option>
@@ -372,9 +373,9 @@ function SearchMap() {
 							<button
 								type="button"
 								onClick={saveHistory}
-								className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+								className="w-6 h-6 bg-gradient-to-r from-green-500 to-green-300 p-1 rounded-full"
 							>
-								<span className="text-white">Save</span>
+								<span className="text-white"><CiSaveUp1 /></span>
 							</button>
 							<button
 								type="button"
@@ -406,11 +407,10 @@ function SearchMap() {
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${
-								selectedRouteIndex === index
+							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
 									? "bg-gray-100"
 									: "hover:bg-gray-100"
-							}`}
+								}`}
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
@@ -530,11 +530,10 @@ function SearchMap() {
 								}).map((_, index) => (
 									<li key={index}>
 										<button
-											className={`px-3 py-1 rounded-md ${
-												currentPageTransit === index + 1
+											className={`px-3 py-1 rounded-md ${currentPageTransit === index + 1
 													? "bg-gray-400"
 													: "bg-gray-200"
-											}`}
+												}`}
 											onClick={() =>
 												paginateTransit(index + 1)
 											}
@@ -601,22 +600,6 @@ function SearchMap() {
 								))}
 						</div>
 					)}
-				</div>
-				<div>
-					{data &&
-						data.map((item, index) => (
-							<div key={index}>
-								{item && ( // Check if item is not null/undefined
-									<div>
-										<p>Source: {item.src}</p>
-										<p>Destination: {item.dest}</p>
-										<p>Duration:{item.duration}</p>
-										<p>Distance:{item.distance}</p>
-										<p>Fare:{item.fare}</p>
-									</div>
-								)}
-							</div>
-						))}
 				</div>
 			</div>
 		</div>
