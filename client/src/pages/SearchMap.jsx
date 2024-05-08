@@ -97,6 +97,7 @@ function SearchMap() {
 	const [savedAddresses, setSavedAddresses] = useState([]);
 	const [src, setSrc] = useState("");
 	const [dest, setDest] = useState("");
+	const [data, setData] = useState([]);
 
 
 	useEffect(() => {
@@ -240,10 +241,16 @@ function SearchMap() {
 		setSelectedRouteIndex(index);
 	}
 
-	const saveHistory = async (e)=> {
+	const saveHistory = async (e) => {
 		e.preventDefault();
 		try {
-			await axios.post("http://localhost:6005/", { src, dest });
+			await axios.post("http://localhost:6005/", { src, dest }).then(res => {
+				if (res.data === "failed") {
+					alert("Failed to save data!");
+				} else {
+					setData(res.data);
+				}
+			})
 		} catch (err) {
 			console.log(err);
 		}
@@ -533,6 +540,18 @@ function SearchMap() {
 								))}
 						</div>
 					)}
+				</div>
+				<div>
+					{data && data.map((item, index) => (
+						<div key={index}>
+							{item && ( // Check if item is not null/undefined
+								<div>
+									<p>Source: {item.src}</p>
+									<p>Destination: {item.dest}</p>
+								</div>
+							)}
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

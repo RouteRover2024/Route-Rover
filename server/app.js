@@ -133,13 +133,17 @@ app.post("/", async (req, res) => {
         // Save the history document to the database
         await hist.save();
 
-        res.status(201).send(hist); // Respond with saved history document
+        // Fetch all data from the server
+        const allData = await historydb.find({});
+        res.json(allData); // Sending response with allData
     } catch (error) {
         console.error("Error:", error);
+        res.json("failed");
         res.status(400).send(error);
     }
 });
-// app.use("/history", historyRouter);
+
+
 
 
 app.use((err, req, res, next) => {
