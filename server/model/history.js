@@ -1,14 +1,20 @@
 const mongoose = require("mongoose");
 
 const history = new mongoose.Schema(
-	{
-		source : String,
-        destination : String,
-        duration : String,
-        distance : String,
-        cost : Number
-	},
-	{ timestamps: true }
+    {
+        src:{
+            type: String,
+            required: true
+        },
+        dest:{
+            type: String,
+            required: true
+        },
+        time:{
+            type: Date,
+            default: Date.now
+        }
+    },
 );
 
 const historydb = new mongoose.model("history", history);

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 // import { gmapkey } from "../../../server/app";
 import { FaTimes, FaLocationArrow } from "react-icons/fa";
-
+import axios from 'axios'
 import {
 	GoogleMap,
 	useJsApiLoader,
@@ -13,15 +13,15 @@ const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
 const libraries = ["places"];
 
-function debounce(func, delay) {
-	let timer;
-	return function (...args) {
-		clearTimeout(timer);
-		timer = setTimeout(() => {
-			func.apply(this, args);
-		}, delay);
-	};
-}
+// function debounce(func, delay) {
+// 	let timer;
+// 	return function (...args) {
+// 		clearTimeout(timer);
+// 		timer = setTimeout(() => {
+// 			func.apply(this, args);
+// 		}, delay);
+// 	};
+// }
 
 function renderVehicleType(vehicleType) {
 	switch (vehicleType) {
@@ -95,6 +95,8 @@ function SearchMap() {
 
 	// State to hold saved addresses
 	const [savedAddresses, setSavedAddresses] = useState([]);
+	const [src, setSrc] = useState("");
+	const [dest, setDest] = useState("");
 
 
 	useEffect(() => {
@@ -121,17 +123,17 @@ function SearchMap() {
 		return <div>Loading...</div>;
 	}
 
-	const debouncedSearch = debounce((searchTerm) => {
-		console.log("Searching with term:", searchTerm);
-	}, 700);
+	// const debouncedSearch = debounce((searchTerm) => {
+	// 	console.log("Searching with term:", searchTerm);
+	// }, 700);
 
-	const handleOriginInputChange = (event) => {
-		debouncedSearch(event.target.value);
-	};
+	// const handleOriginInputChange = (event) => {
+	// 	debouncedSearch(event.target.value);
+	// };
 
-	const handleDestinationInputChange = (event) => {
-		debouncedSearch(event.target.value);
-	};
+	// const handleDestinationInputChange = (event) => {
+	// 	debouncedSearch(event.target.value);
+	// };
 
 	const handleTravelModeChange = (event) => {
 		setTravelMode(event.target.value);
@@ -233,10 +235,19 @@ function SearchMap() {
 		destinationRef.current.value = "";
 	}
 
+
 	function handleRouteSelect(index) {
 		setSelectedRouteIndex(index);
 	}
 
+	const saveHistory = async (e)=> {
+		e.preventDefault();
+		try {
+			await axios.post("http://localhost:6005/", { src, dest });
+		} catch (err) {
+			console.log(err);
+		}
+	}
 	return (
 		<div className="mt-6 ">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -267,80 +278,92 @@ function SearchMap() {
 				</div>
 				{/* Inputs and Controls */}
 				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-md p-4">
-					<input
-						type="text"
-						placeholder="Origin"
-						ref={originRef}
-						className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-						onChange={handleOriginInputChange}
-						list="origin-addresses"
-					/>
-					<datalist id="origin-addresses">
-						{savedAddresses.map((address, index) => (
-							<option key={index} value={address} />
-						))}
-					</datalist>
+					<form action="POST">
+						<input
+							type="text"
+							placeholder="Origin"
+							ref={originRef}
+							className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+							//onChange={handleOriginInputChange}
+							list="origin-addresses"
+							onChange={(e) => { setSrc(e.target.value) }}
+						/>
+						<datalist id="origin-addresses">
+							{savedAddresses.map((address, index) => (
+								<option key={index} value={address} />
+							))}
+						</datalist>
 
-					<input
-						type="text"
-						placeholder="Destination"
-						ref={destinationRef}
-						className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
-						onChange={handleDestinationInputChange}
-						list="destination-addresses"
-					/>
-					<datalist id="destination-addresses">
-						{savedAddresses.map((address, index) => (
-							<option key={index} value={address} />
-						))}
-					</datalist>
+						<input
+							type="text"
+							placeholder="Destination"
+							ref={destinationRef}
+							className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
+							//onChange={handleDestinationInputChange}
+							list="destination-addresses"
+							onChange={(e) => { setDest(e.target.value) }}
+						/>
+						<datalist id="destination-addresses">
+							{savedAddresses.map((address, index) => (
+								<option key={index} value={address} />
+							))}
+						</datalist>
 
-					<div className="flex flex-row items-center gap-4 sm:gap-8">
-						<div className="flex flex-row gap-4 items-center">
-							<div className="font-semibold text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-								Select Travel Mode
+						<div className="flex flex-row items-center gap-4 sm:gap-8">
+							<div className="flex flex-row gap-4 items-center">
+								<div className="font-semibold text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+									Select Travel Mode
+								</div>
+								<select
+									value={travelMode}
+									onChange={handleTravelModeChange}
+									className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono"
+								>
+									<option value="DRIVING">Driving</option>
+									<option value="WALKING">Walking</option>
+									<option value="BICYCLING">Cycling</option>
+									<option value="TRANSIT">Transit</option>
+								</select>
 							</div>
-							<select
-								value={travelMode}
-								onChange={handleTravelModeChange}
-								className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono"
-							>
-								<option value="DRIVING">Driving</option>
-								<option value="WALKING">Walking</option>
-								<option value="BICYCLING">Cycling</option>
-								<option value="TRANSIT">Transit</option>
-							</select>
 						</div>
-					</div>
 
-					<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
-						<button
-							type="button"
-							onClick={calculateRoute}
-							className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-						>
-							<span className="text-white">Calculate Route</span>
-						</button>
-						<button
-							type="button"
-							onClick={clearRoute}
-							title="Clear Route"
-							className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-						>
-							<FaTimes className="text-white" />
-						</button>
-						<button
-							type="button"
-							className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-purple-600 to-purple-700 hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-							onClick={() => {
-								map.panTo(center);
-								map.setZoom(15);
-							}}
-							title="ReLocate"
-						>
-							<FaLocationArrow className="text-white" />
-						</button>
-					</div>
+						<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
+							<button
+								type="button"
+								onClick={calculateRoute}
+								className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+							>
+								<span className="text-white">Calculate Route</span>
+							</button>
+							<button
+								type="button"
+								onClick={saveHistory}
+								className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+							>
+								<span className="text-white">Save</span>
+							</button>
+							<button
+								type="button"
+								onClick={clearRoute}
+								title="Clear Route"
+								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+							>
+								<FaTimes className="text-white" />
+							</button>
+							<button
+								type="button"
+								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-purple-600 to-purple-700 hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+								onClick={() => {
+									map.panTo(center);
+									map.setZoom(15);
+								}}
+								title="ReLocate"
+							>
+								<FaLocationArrow className="text-white" />
+							</button>
+
+						</div>
+					</form>
 				</div>
 			</div>
 			{/* Transit options */}

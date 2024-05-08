@@ -9,7 +9,7 @@ const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth20").Strategy;
 const userdb = require("./model/userSchema");
-const historyRouter = require("./routes/historyRouter");
+const historydb = require("./model/history");
 const mongoose = require("mongoose")
 
 const clientid = process.env.CLIENT_ID;
@@ -120,7 +120,27 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
 });
 
-app.use("/api/create", historyRouter);
+app.post("/", async (req, res) => {
+    try {
+        const { src, dest } = req.body;
+
+        // Create a new history document
+        const hist = new historydb({
+            src: src,
+            dest: dest
+        });
+
+        // Save the history document to the database
+        await hist.save();
+
+        res.status(201).send(hist); // Respond with saved history document
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(400).send(error);
+    }
+});
+// app.use("/history", historyRouter);
+
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
