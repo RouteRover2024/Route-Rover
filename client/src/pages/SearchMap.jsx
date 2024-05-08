@@ -610,6 +610,9 @@ function SearchMap() {
 									<div>
 										<p>Source: {item.src}</p>
 										<p>Destination: {item.dest}</p>
+										<p>Duration:{item.duration}</p>
+										<p>Distance:{item.distance}</p>
+										<p>Fare:{item.fare}</p>
 									</div>
 								)}
 							</div>
