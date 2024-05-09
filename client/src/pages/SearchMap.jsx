@@ -4,18 +4,19 @@ import { FaTimes, FaLocationArrow } from "react-icons/fa";
 import { CiSaveUp1 } from "react-icons/ci";
 import { TbHistory, TbHistoryOff } from "react-icons/tb";
 import axios from "axios";
-import History from './History';
+
 import {
 	GoogleMap,
 	useJsApiLoader,
 	Marker,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
+import HistTable from "./HistTable";
 
 const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
 const libraries = ["places"];
-const google = window.google
+//const google = window.google
 // function debounce(func, delay) {
 // 	let timer;
 // 	return function (...args) {
@@ -576,7 +577,7 @@ function SearchMap() {
 						</div>
 						{isOpen && (
 							<div className="p-4">
-								<History data={data} />
+								<HistTable data={data} />
 							</div>
 						)}
 					</div>
@@ -610,37 +611,33 @@ function SearchMap() {
 												<span className="font-semibold">Phone:</span>{" "}
 												{option?.transitLine.agencies[0].phone}
 											</p>
-											<p className="text-gray-300">
-												<span className="font-semibold">URL:</span>{" "}
-												<a
-													href={option?.transitLine.agencies[0].url}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="text-blue-400 hover:text-blue-300 transition duration-300"
-												>
-													{option?.transitLine.agencies[0].url}
-												</a>
-											</p>
+											<button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-100/10 dark:shadow-lg dark:shadow-blue-200/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+												onClick={() => window.open(option?.transitLine.agencies[0].url, "_blank")}
+											>
+											
+												Visit Website
+											</button>
 										</div>
-										<div>
+										{/* <div>
 											<div
 												className={`bg-${option.vehicleType === "BUS"
-														? "purple-700"
-														: option.vehicleType === "TRAIN"
-															? "green-700"
-															: "orange-700"
+													? "purple-700"
+													: option.vehicleType === "TRAIN"
+														? "green-700"
+														: "orange-700"
 													} text-white px-4 py-2 rounded-md flex items-center justify-center mt-4`}
 											>
 												<span className="uppercase font-semibold">
 													{option.vehicleType}
 												</span>
 											</div>
-										</div>
+										</div> */}
 									</div>
 								))}
 						</div>
 					)}
 				</div>
+
 			</div>
 		</div>
 	);

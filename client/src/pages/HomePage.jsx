@@ -5,7 +5,7 @@ import RouteRover from "../assets/RouteRoverLogoText.svg";
 import axios from "axios";
 
 import {
-	ChartBarIcon,
+	// ChartBarIcon,
 	FolderIcon,
 	HomeIcon,
 	MenuIcon,
