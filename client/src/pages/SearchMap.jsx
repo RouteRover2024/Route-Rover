@@ -1,5 +1,5 @@
+ /*global google*/ 
 import { useRef, useState, useEffect } from "react";
-// import { gmapkey } from "../../../server/app";
 import { FaTimes, FaLocationArrow } from "react-icons/fa";
 import { CiSaveUp1 } from "react-icons/ci";
 import { TbHistory, TbHistoryOff } from "react-icons/tb";
