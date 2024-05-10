@@ -582,9 +582,9 @@ function SearchMap() {
 							>
 								<span className="text-lg font-medium">View History</span>
 								{isOpen ? (
-									<TbHistory className="h-5 w-5 text-gray-500" />
-								) : (
 									<TbHistoryOff className="h-5 w-5 text-gray-500" />
+								) : (
+									< TbHistory  className="h-5 w-5 text-gray-500" />
 								)}
 							</button>
 						</div>
