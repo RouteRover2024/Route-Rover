@@ -1,14 +1,17 @@
+ /*global google*/ 
 import { useRef, useState, useEffect } from "react";
+import { TbHistory, TbHistoryOff } from "react-icons/tb";
 import { FaTimes, FaMapMarkerAlt } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
 import axios from "axios";
-// import History from './History';
+
 import {
 	GoogleMap,
 	useJsApiLoader,
 	Marker,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
+import HistTable from "./HistTable";
 
 const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
@@ -93,6 +96,13 @@ function SearchMap() {
 	const [dest, setDest] = useState("");
 	const [data, setData] = useState([]);
 
+	const [isOpen, setIsOpen] = useState(false);
+
+	const toggleAccordion = () => {
+		setIsOpen(!isOpen);
+	};
+
+
 	useEffect(() => {
 		const addressesData = JSON.parse(localStorage.getItem("addresses"));
 		if (addressesData) {
@@ -153,7 +163,7 @@ function SearchMap() {
 			if (results.status === "OK") {
 				setDirectionsResponse(results);
 
-				const routesInfo = results.routes.map((route, index) => ({
+				const routesInfo = results.routes?.map((route, index) => ({
 					summary: route.summary,
 					fare: route?.fare,
 					distance: route.legs[0].distance.text,
@@ -241,7 +251,7 @@ function SearchMap() {
 		if (routesInfo[selectedRouteIndex]) {
 			const route = routesInfo[selectedRouteIndex];
 			let { distance, duration, fare } = route;
-			fare = fare.text;
+			fare = fare ? fare.text : '';
 
 			try {
 				await axios
@@ -256,8 +266,10 @@ function SearchMap() {
 						if (res.data === "failed") {
 							alert("Failed to save data!");
 						} else {
+
 							setData(res.data);
-							console.log(res.data);
+							console.log(res);
+
 						}
 					});
 				console.log("Route saved successfully!");
@@ -418,11 +430,11 @@ function SearchMap() {
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${
-								selectedRouteIndex === index
-									? "bg-gray-100"
-									: "hover:bg-gray-100"
-							}`}
+							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
+								? "bg-gray-100"
+								: "hover:bg-gray-100"
+								}`}
+
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
@@ -542,11 +554,10 @@ function SearchMap() {
 								}).map((_, index) => (
 									<li key={index}>
 										<button
-											className={`px-3 py-1 rounded-md ${
-												currentPageTransit === index + 1
-													? "bg-gray-400"
-													: "bg-gray-200"
-											}`}
+											className={`px-3 py-1 rounded-md ${currentPageTransit === index + 1
+												? "bg-gray-400"
+												: "bg-gray-200"
+												}`}
 											onClick={() =>
 												paginateTransit(index + 1)
 											}
@@ -560,16 +571,39 @@ function SearchMap() {
 					</div>
 				)}
 
+				{/* Accordin */}
+				<div className="mt-8">
+					<div className="bg-white rounded-lg shadow-md overflow-hidden">
+						<div className="border-s">
+							<button
+								type="button"
+								className="flex w-full items-center justify-between px-4 py-3 text-left text-gray-900"
+								onClick={toggleAccordion}
+							>
+								<span className="text-lg font-medium">View History</span>
+								{isOpen ? (
+									<TbHistory className="h-5 w-5 text-gray-500" />
+								) : (
+									<TbHistoryOff className="h-5 w-5 text-gray-500" />
+								)}
+							</button>
+						</div>
+						{isOpen && (
+							<div className="p-4">
+								<HistTable data={data} />
+							</div>
+						)}
+					</div>
+				</div>
+				{/* Transit */}
 				<div className="p-2 sm:m-4">
-					<div className="font-semibold">Transit Agencies:</div>
+					<div className="font-semibold mb-4">Transit Agencies:</div>
 					{transitOptions.length > 0 && (
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 							{transitOptions
 								.reduce((acc, option) => {
 									const existingVehicleType = acc.find(
-										(item) =>
-											item.vehicleType ===
-											option.vehicleType
+										(item) => item.vehicleType === option.vehicleType
 									);
 									if (!existingVehicleType) {
 										acc.push(option);
@@ -578,42 +612,45 @@ function SearchMap() {
 									return acc;
 								}, [])
 								.map((option, index) => (
-									<div key={index}>
+									<div
+										key={index}
+										className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col justify-between"
+									>
 										<div>
-											<p>
-												Transit Agency Name:{" "}
-												{
-													option?.transitLine
-														.agencies[0].name
-												}
+											<p className="text-white font-semibold mb-2">
+												{option?.transitLine.agencies[0].name}
 											</p>
-											<p>
-												Transit Agency Phone:{" "}
-												{
-													option?.transitLine
-														.agencies[0].phone
-												}
+											<p className="text-gray-300 mb-2">
+												<span className="font-semibold">Phone:</span>{" "}
+												{option?.transitLine.agencies[0].phone}
 											</p>
-											<p>
-												Transit Agency URL:{" "}
-												<a
-													href={
-														option?.transitLine
-															.agencies[0].url
-													}
-												>
-													{
-														option?.transitLine
-															.agencies[0].url
-													}
-												</a>
-											</p>
+											<button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-100/10 dark:shadow-lg dark:shadow-blue-200/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+												onClick={() => window.open(option?.transitLine.agencies[0].url, "_blank")}
+											>
+											
+												Visit Website
+											</button>
 										</div>
+										{/* <div>
+											<div
+												className={`bg-${option.vehicleType === "BUS"
+													? "purple-700"
+													: option.vehicleType === "TRAIN"
+														? "green-700"
+														: "orange-700"
+													} text-white px-4 py-2 rounded-md flex items-center justify-center mt-4`}
+											>
+												<span className="uppercase font-semibold">
+													{option.vehicleType}
+												</span>
+											</div>
+										</div> */}
 									</div>
 								))}
 						</div>
 					)}
 				</div>
+
 			</div>
 		</div>
 	);
