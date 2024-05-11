@@ -571,7 +571,7 @@ function SearchMap() {
 					</div>
 				)}
 
-				{/* Accordin */}
+				{/* Accordin
 				<div className="mt-8">
 					<div className="bg-white rounded-lg shadow-md overflow-hidden">
 						<div className="border-s">
@@ -594,7 +594,7 @@ function SearchMap() {
 							</div>
 						)}
 					</div>
-				</div>
+				</div> */}
 				{/* Transit */}
 				<div className="p-2 sm:m-4">
 					<div className="font-semibold mb-4">Transit Agencies:</div>
