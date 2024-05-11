@@ -1,6 +1,6 @@
 // HistoryController.js
 
-const History = require("../model/History");
+const History = require("../model/history");
 
 const HistoryController = {
     createHistory: async (req, res) => {
