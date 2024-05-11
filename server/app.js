@@ -149,3 +149,14 @@ app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send("Something went wrong!");
 });
+
+
+app.get('/histories', async (req, res) => {
+	try {
+	  const history = await historydb.find();
+	  res.json(history);
+	} catch (err) {
+	  console.error("Error fetching history:", err);
+	  res.status(500).json({ message: "Error retrieving history data" });
+	}
+  });
