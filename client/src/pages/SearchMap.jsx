@@ -1,6 +1,5 @@
  /*global google*/ 
 import { useRef, useState, useEffect } from "react";
-import { TbHistory, TbHistoryOff } from "react-icons/tb";
 import { FaTimes, FaMapMarkerAlt } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
 import axios from "axios";
@@ -11,7 +10,7 @@ import {
 	Marker,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
-import HistTable from "./HistTable";
+
 
 const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
@@ -94,13 +93,11 @@ function SearchMap() {
 	const [savedAddresses, setSavedAddresses] = useState([]);
 	const [src, setSrc] = useState("");
 	const [dest, setDest] = useState("");
-	const [data, setData] = useState([]);
+	
 
-	const [isOpen, setIsOpen] = useState(false);
+	
 
-	const toggleAccordion = () => {
-		setIsOpen(!isOpen);
-	};
+	
 
 
 	useEffect(() => {
@@ -268,8 +265,7 @@ function SearchMap() {
 							alert("Failed to save data!");
 						} else {
 
-							setData(res.data);
-							console.log(res);
+							alert("Route saved successfully!");
 
 						}
 					});
