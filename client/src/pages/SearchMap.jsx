@@ -159,7 +159,7 @@ function SearchMap() {
 				avoidHighways: false,
 				avoidTolls: false,
 			});
-
+				console.log(results);
 			if (results.status === "OK") {
 				setDirectionsResponse(results);
 
@@ -175,6 +175,7 @@ function SearchMap() {
 				if (travelMode === "TRANSIT") {
 					const transitOptions = extractTransitOptions(results);
 					setTransitOptions(transitOptions);
+					console.log(transitOptions);
 				} else {
 					setTransitOptions([]);
 				}
@@ -570,31 +571,7 @@ function SearchMap() {
 						</div>
 					</div>
 				)}
-
-				{/* Accordin */}
-				<div className="mt-8">
-					<div className="bg-white rounded-lg shadow-md overflow-hidden">
-						<div className="border-s">
-							<button
-								type="button"
-								className="flex w-full items-center justify-between px-4 py-3 text-left text-gray-900"
-								onClick={toggleAccordion}
-							>
-								<span className="text-lg font-medium">View History</span>
-								{isOpen ? (
-									<TbHistoryOff className="h-5 w-5 text-gray-500" />
-								) : (
-									< TbHistory  className="h-5 w-5 text-gray-500" />
-								)}
-							</button>
-						</div>
-						{isOpen && (
-							<div className="p-4">
-								<HistTable data={data} />
-							</div>
-						)}
-					</div>
-				</div>
+				
 				{/* Transit */}
 				<div className="p-2 sm:m-4">
 					<div className="font-semibold mb-4">Transit Agencies:</div>
