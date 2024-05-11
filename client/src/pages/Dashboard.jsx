@@ -48,7 +48,7 @@ function Dashboard() {
 						Navigation Summary
 					</h2>
 					<div className="flex flex-col md:flex-row md:space-x-4 mt-4 gap-8 justify-between">
-						<div className="flex flex-col items-center space-y-2 hover:bg-indigo-700 transition duration-300 rounded-md py-2 px-4 text-center">
+						<div className="flex flex-col items-center space-y-2 hover:scale-110 transition duration-300 rounded-md py-2 px-4 text-center">
 							<span className="text-base font-medium text-slate-300">
 								Most Frequent Source
 							</span>
@@ -56,7 +56,7 @@ function Dashboard() {
 								{mostFrequentSource}
 							</span>
 						</div>
-						<div className="flex flex-col items-center space-y-2 hover:bg-indigo-700 transition duration-300 rounded-md py-2 px-4 text-center">
+						<div className="flex flex-col items-center space-y-2 hover:scale-110 transition duration-300 rounded-md py-2 px-4 text-center">
 							<span className="text-base font-medium text-slate-300">
 								Most Frequent Destination
 							</span>
@@ -64,7 +64,7 @@ function Dashboard() {
 								{mostFrequentDestination}
 							</span>
 						</div>
-						<div className="flex flex-col items-center space-y-2 hover:bg-indigo-700 transition duration-300 rounded-md py-2 px-4 text-center">
+						<div className="flex flex-col items-center space-y-2 hover:scale-110 transition duration-300 rounded-md py-2 px-4 text-center">
 							<span className="text-base font-medium text-slate-300">
 								Total Cost
 							</span>
@@ -72,7 +72,7 @@ function Dashboard() {
 								{totalCost}
 							</span>
 						</div>
-						<div className="flex flex-col items-center space-y-2 hover:bg-indigo-700 transition duration-300 rounded-md py-2 px-4 text-center">
+						<div className="flex flex-col items-center space-y-2 hover:scale-110 transition duration-300 rounded-md py-2 px-4 text-center">
 							<span className="text-base font-medium text-slate-300">
 								Total Distance
 							</span>
@@ -80,7 +80,7 @@ function Dashboard() {
 								{totalDistance}
 							</span>
 						</div>
-						<div className="flex flex-col items-center space-y-2 hover:bg-indigo-700 transition duration-300 rounded-md py-2 px-4 text-center">
+						<div className="flex flex-col items-center space-y-2 hover:scale-110 transition duration-300 rounded-md py-2 px-4 text-center">
 							<span className="text-base font-medium text-slate-300">
 								Total Duration
 							</span>

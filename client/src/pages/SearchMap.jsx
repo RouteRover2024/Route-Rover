@@ -1,4 +1,4 @@
- /*global google*/ 
+/*global google*/
 import { useRef, useState, useEffect } from "react";
 import { TbHistory, TbHistoryOff } from "react-icons/tb";
 import { FaTimes, FaMapMarkerAlt } from "react-icons/fa";
@@ -102,7 +102,6 @@ function SearchMap() {
 		setIsOpen(!isOpen);
 	};
 
-
 	useEffect(() => {
 		const addressesData = JSON.parse(localStorage.getItem("addresses"));
 		if (addressesData) {
@@ -124,7 +123,13 @@ function SearchMap() {
 	}, []);
 
 	if (!isLoaded) {
-		return <div>Loading...</div>;
+		return (
+			<div className="h-screen w-full flex items-center justify-center">
+				<h1 className="text-4xl font-semibold animate-pulse">
+					Loading...
+				</h1>
+			</div>
+		);
 	}
 
 	// const debouncedSearch = debounce((searchTerm) => {
@@ -237,7 +242,6 @@ function SearchMap() {
 		setRoutesInfo([]);
 		originRef.current.value = "";
 		destinationRef.current.value = "";
-
 	}
 
 	function handleRouteSelect(index) {
@@ -251,7 +255,7 @@ function SearchMap() {
 		if (routesInfo[selectedRouteIndex]) {
 			const route = routesInfo[selectedRouteIndex];
 			let { distance, duration, fare } = route;
-			fare = fare ? fare.text : '';
+			fare = fare ? fare.text : "";
 
 			try {
 				await axios
@@ -266,10 +270,8 @@ function SearchMap() {
 						if (res.data === "failed") {
 							alert("Failed to save data!");
 						} else {
-
 							setData(res.data);
 							console.log(res);
-
 						}
 					});
 				console.log("Route saved successfully!");
@@ -430,11 +432,11 @@ function SearchMap() {
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
-								? "bg-gray-100"
-								: "hover:bg-gray-100"
-								}`}
-
+							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${
+								selectedRouteIndex === index
+									? "bg-gray-100"
+									: "hover:bg-gray-100"
+							}`}
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
@@ -554,10 +556,11 @@ function SearchMap() {
 								}).map((_, index) => (
 									<li key={index}>
 										<button
-											className={`px-3 py-1 rounded-md ${currentPageTransit === index + 1
-												? "bg-gray-400"
-												: "bg-gray-200"
-												}`}
+											className={`px-3 py-1 rounded-md ${
+												currentPageTransit === index + 1
+													? "bg-gray-400"
+													: "bg-gray-200"
+											}`}
 											onClick={() =>
 												paginateTransit(index + 1)
 											}
@@ -603,7 +606,9 @@ function SearchMap() {
 							{transitOptions
 								.reduce((acc, option) => {
 									const existingVehicleType = acc.find(
-										(item) => item.vehicleType === option.vehicleType
+										(item) =>
+											item.vehicleType ===
+											option.vehicleType
 									);
 									if (!existingVehicleType) {
 										acc.push(option);
@@ -618,16 +623,31 @@ function SearchMap() {
 									>
 										<div>
 											<p className="text-white font-semibold mb-2">
-												{option?.transitLine.agencies[0].name}
+												{
+													option?.transitLine
+														.agencies[0].name
+												}
 											</p>
 											<p className="text-gray-300 mb-2">
-												<span className="font-semibold">Phone:</span>{" "}
-												{option?.transitLine.agencies[0].phone}
+												<span className="font-semibold">
+													Phone:
+												</span>{" "}
+												{
+													option?.transitLine
+														.agencies[0].phone
+												}
 											</p>
-											<button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-100/10 dark:shadow-lg dark:shadow-blue-200/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
-												onClick={() => window.open(option?.transitLine.agencies[0].url, "_blank")}
+											<button
+												type="button"
+												className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-100/10 dark:shadow-lg dark:shadow-blue-200/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+												onClick={() =>
+													window.open(
+														option?.transitLine
+															.agencies[0].url,
+														"_blank"
+													)
+												}
 											>
-											
 												Visit Website
 											</button>
 										</div>
@@ -650,7 +670,6 @@ function SearchMap() {
 						</div>
 					)}
 				</div>
-
 			</div>
 		</div>
 	);
