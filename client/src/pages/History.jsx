@@ -99,7 +99,7 @@ function History() {
 													</tr>
 												</thead>
 												<tbody>
-													{routes.map((person) => (
+													{routes.slice().reverse().map((person) => (
 														<tr key={person._id}>
 															<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
 																{person.src}
