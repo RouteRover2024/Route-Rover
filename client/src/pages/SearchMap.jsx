@@ -1,6 +1,5 @@
 /*global google*/
 import { useRef, useState, useEffect } from "react";
-import { TbHistory, TbHistoryOff } from "react-icons/tb";
 import { FaTimes, FaMapMarkerAlt } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
 import axios from "axios";
@@ -11,7 +10,6 @@ import {
 	Marker,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
-import HistTable from "./HistTable";
 
 const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
@@ -94,13 +92,6 @@ function SearchMap() {
 	const [savedAddresses, setSavedAddresses] = useState([]);
 	const [src, setSrc] = useState("");
 	const [dest, setDest] = useState("");
-	const [data, setData] = useState([]);
-
-	const [isOpen, setIsOpen] = useState(false);
-
-	const toggleAccordion = () => {
-		setIsOpen(!isOpen);
-	};
 
 	useEffect(() => {
 		const addressesData = JSON.parse(localStorage.getItem("addresses"));
@@ -270,7 +261,6 @@ function SearchMap() {
 						if (res.data === "failed") {
 							alert("Failed to save data!");
 						} else {
-							setData(res.data);
 							console.log(res);
 						}
 					});
@@ -398,6 +388,7 @@ function SearchMap() {
 							<button
 								type="button"
 								onClick={saveHistory}
+								title="SaveRoute"
 								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
 							>
 								<FaSave className="text-white" />
@@ -425,7 +416,6 @@ function SearchMap() {
 					</form>
 				</div>
 			</div>
-			{/* Transit options */}
 			<div className="p-2 sm:mx-4">
 				{/* Route Options */}
 				<div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-4 px-4 overflow-auto">
