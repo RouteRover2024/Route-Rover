@@ -297,7 +297,7 @@ function SearchMap() {
 	return (
 		<div className="mt-6 ">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-				<h1 className="text-3xl font-semibold text-gray-900">
+				<h1 className="text-3xl font-semibold text-slate-900">
 					New Journey
 				</h1>
 			</div>
@@ -323,13 +323,13 @@ function SearchMap() {
 					</GoogleMap>
 				</div>
 				{/* Inputs and Controls */}
-				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-md p-4">
+				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-md p-4">
 					<form action="POST" className="h-full flex flex-col">
 						<input
 							type="text"
 							placeholder="Origin"
 							ref={originRef}
-							className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
+							className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-slate-600 border-2 font-bold font-mono bg-gradient-to-r from-slate-700 to-slate-600 text-white bg-clip-text"
 							//onChange={handleOriginInputChange}
 							list="origin-addresses"
 							onChange={(e) => {
@@ -346,7 +346,7 @@ function SearchMap() {
 							type="text"
 							placeholder="Destination"
 							ref={destinationRef}
-							className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
+							className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-slate-600 border-2 font-bold font-mono bg-gradient-to-r from-slate-700 to-slate-600 text-white bg-clip-text"
 							//onChange={handleDestinationInputChange}
 							list="destination-addresses"
 							onChange={(e) => {
@@ -367,7 +367,7 @@ function SearchMap() {
 								<select
 									value={travelMode}
 									onChange={handleTravelModeChange}
-									className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text /* Remove conflicting styles */ hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono appearance-none outline-none"
+									className="inline-flex items-center px-4 py-2 border border-slate-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-slate-700 to-slate-600 text-white bg-clip-text /* Remove conflicting styles */ hover:bg-gradient-to-r hover:from-slate-600 hover:to-slate-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono appearance-none outline-none"
 								>
 									<option
 										className="text-black"
@@ -456,14 +456,14 @@ function SearchMap() {
 			</div>
 			<div className="p-2 sm:mx-4">
 				{/* Route Options */}
-				<div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-4 px-4 overflow-auto">
+				<div className="flex flex-row flex-wrap sm:flex-nowrap py-2 sm:flex-row items-center gap-4 sm:gap-8 mt-2 px-4 overflow-auto">
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${
+							className={`p-2 border border-slate-300 rounded-md cursor-pointer ${
 								selectedRouteIndex === index
-									? "bg-gray-100"
-									: "hover:bg-gray-100"
+									? "bg-slate-200"
+									: "hover:bg-slate-300"
 							}`}
 							onClick={() => handleRouteSelect(route.index)}
 						>
@@ -511,7 +511,7 @@ function SearchMap() {
 							{currentTransitOptions.map((option, index) => (
 								<div
 									key={index}
-									className="bg-gray-700 rounded-lg shadow-lg overflow-hidden p-4"
+									className="bg-slate-700 rounded-lg shadow-lg overflow-hidden p-4"
 								>
 									{option?.transitLine.vehicle && (
 										<div className="flex items-center gap-2">
@@ -529,7 +529,7 @@ function SearchMap() {
 														option.vehicleType
 													)}
 												</p>
-												<p className="text-gray-400 text-sm">
+												<p className="text-slate-400 text-sm">
 													{option.transitLine?.name}
 												</p>
 											</div>
@@ -555,7 +555,7 @@ function SearchMap() {
 											)}
 										</span>
 									</div>
-									<p className="text-gray-400 text-sm">
+									<p className="text-slate-400 text-sm">
 										{option.instructions}
 									</p>
 									{option?.fare && option?.num_stops && (
@@ -576,7 +576,7 @@ function SearchMap() {
 						</div>
 						{/* Pagination controls */}
 						<div className="flex justify-center items-center mt-4">
-							<ul className="flex list-none gap-2">
+							<ul className="flex list-none gap-2 text-black font-bold">
 								{Array.from({
 									length: Math.ceil(
 										transitOptions.length / transitPerPage
@@ -586,8 +586,8 @@ function SearchMap() {
 										<button
 											className={`px-3 py-1 rounded-md ${
 												currentPageTransit === index + 1
-													? "bg-gray-400"
-													: "bg-gray-200"
+													? "bg-slate-400"
+													: "bg-slate-200"
 											}`}
 											onClick={() =>
 												paginateTransit(index + 1)
@@ -608,14 +608,14 @@ function SearchMap() {
 						<div className="border-s">
 							<button
 								type="button"
-								className="flex w-full items-center justify-between px-4 py-3 text-left text-gray-900"
+								className="flex w-full items-center justify-between px-4 py-3 text-left text-slate-900"
 								onClick={toggleAccordion}
 							>
 								<span className="text-lg font-medium">View History</span>
 								{isOpen ? (
-									<TbHistoryOff className="h-5 w-5 text-gray-500" />
+									<TbHistoryOff className="h-5 w-5 text-slate-500" />
 								) : (
-									< TbHistory  className="h-5 w-5 text-gray-500" />
+									< TbHistory  className="h-5 w-5 text-slate-500" />
 								)}
 							</button>
 						</div>
@@ -647,7 +647,7 @@ function SearchMap() {
 								.map((option, index) => (
 									<div
 										key={index}
-										className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col justify-between"
+										className="bg-slate-900 rounded-lg shadow-lg p-4 flex flex-col justify-between"
 									>
 										<div>
 											<p className="text-white font-semibold mb-2">
@@ -656,7 +656,7 @@ function SearchMap() {
 														.agencies[0].name
 												}
 											</p>
-											<p className="text-gray-300 mb-2">
+											<p className="text-slate-300 mb-2">
 												<span className="font-semibold">
 													Phone:
 												</span>{" "}

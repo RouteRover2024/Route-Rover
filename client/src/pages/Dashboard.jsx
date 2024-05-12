@@ -184,7 +184,7 @@ function Dashboard() {
 									</p>
 									<Link
 										to="/home/history"
-										className="bg-indigo-500 p-2 w-fit rounded-full text-white font-bold px-4"
+										className="bg-indigo-500 p-2 w-fit rounded-full text-white font-bold px-4 mt-4 sm:mt-0"
 									>
 										See Complete History
 									</Link>
