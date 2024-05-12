@@ -71,7 +71,10 @@ function SearchMap() {
 	// Define state for pagination
 	const [currentPageTransit, setCurrentPageTransit] = useState(1);
 	const transitPerPage = 6; // Adjust this number as per your preference
-
+	// Message / Notif
+	const [message, setMessage] = useState("");
+	const [messageColor, setMessageColor] = useState("");
+	const [disabled, setDisable] = useState(true);
 	// Calculate index of the last transit option on current page
 	const indexOfLastTransit = currentPageTransit * transitPerPage;
 	// Calculate index of the first transit option on current page
@@ -145,6 +148,12 @@ function SearchMap() {
 		}
 
 		try {
+			setMessage("Calculating Route");
+			setMessageColor(
+				"text-white bg-gradient-to-r from-blue-500 to-blue-700"
+			);
+			setTimeout(() => setMessage(""), 3000);
+
 			const directionsService = new google.maps.DirectionsService();
 			const results = await directionsService.route({
 				origin: originRef.current.value,
@@ -158,6 +167,7 @@ function SearchMap() {
 
 			if (results.status === "OK") {
 				setDirectionsResponse(results);
+				setDisable(false);
 
 				const routesInfo = results.routes?.map((route, index) => ({
 					summary: route.summary,
@@ -233,6 +243,11 @@ function SearchMap() {
 		setRoutesInfo([]);
 		originRef.current.value = "";
 		destinationRef.current.value = "";
+		setMessage("Cleared Route");
+		setMessageColor(
+			"text-white bg-gradient-to-r from-rose-500 to-rose-700"
+		);
+		setTimeout(() => setMessage(""), 3000);
 	}
 
 	function handleRouteSelect(index) {
@@ -241,6 +256,13 @@ function SearchMap() {
 
 	const saveHistory = async (e) => {
 		e.preventDefault();
+
+		setMessage("Saving Route...");
+		setMessageColor(
+			"text-white bg-gradient-to-r from-green-500 to-green-700"
+		);
+		setTimeout(() => setMessage("Route Saved!"), 3000);
+		setTimeout(() => setMessage(""), 5000);
 
 		// Check if route is available before accessing properties
 		if (routesInfo[selectedRouteIndex]) {
@@ -375,43 +397,59 @@ function SearchMap() {
 							</div>
 						</div>
 
-						<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
-							<button
-								type="button"
-								onClick={calculateRoute}
-								className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-blue-600 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-							>
-								<span className="text-white">
-									Calculate Route
-								</span>
-							</button>
-							<button
-								type="button"
-								onClick={saveHistory}
-								title="SaveRoute"
-								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-							>
-								<FaSave className="text-white" />
-							</button>
-							<button
-								type="button"
-								onClick={clearRoute}
-								title="Clear Route"
-								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-							>
-								<FaTimes className="text-white" />
-							</button>
-							<button
-								type="button"
-								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-orange-600 to-orange-700 hover:bg-gradient-to-r hover:from-orange-700 hover:to-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-								onClick={() => {
-									map.panTo(center);
-									map.setZoom(15);
-								}}
-								title="ReLocate"
-							>
-								<FaMapMarkerAlt className="text-white" />
-							</button>
+						<div className="flex flex-col justify-evenly items-center w-full sm:mt-auto mt-2 mb-2 gap-2">
+							{message && (
+								<div
+									className={`mt-auto visible w-full text-center rounded-xl py-1 px-2 font-bold ${messageColor}`}
+								>
+									{message}
+								</div>
+							)}
+							<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
+								<button
+									type="button"
+									onClick={calculateRoute}
+									className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-blue-600 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+								>
+									<span className="text-white">
+										Calculate Route
+									</span>
+								</button>
+								<button
+									type="button"
+									disabled={disabled}
+									onClick={saveHistory}
+									title="SaveRoute"
+									className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+								>
+									<FaSave className="text-white" />
+								</button>
+								<button
+									type="button"
+									onClick={clearRoute}
+									title="Clear Route"
+									className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+								>
+									<FaTimes className="text-white" />
+								</button>
+								<button
+									type="button"
+									className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-orange-600 to-orange-700 hover:bg-gradient-to-r hover:from-orange-700 hover:to-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+									onClick={() => {
+										map.panTo(center);
+										map.setZoom(15);
+
+										setMessage("Relocating Map");
+										setMessageColor(
+											"text-white bg-gradient-to-r from-orange-500 to-orange-700"
+										);
+										setTimeout(() => setMessage(""), 3000);
+									}}
+									title="ReLocate"
+								>
+									<FaMapMarkerAlt className="text-white" />
+								</button>
+							</div>
 						</div>
 					</form>
 				</div>

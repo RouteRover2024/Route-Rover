@@ -47,13 +47,23 @@ function Dashboard() {
 	// Function to calculate total cost of all trips
 	const calculateTotalCost = (data) => {
 		return data.reduce((acc, route) => {
-			const cost = parseFloat(route.fare.replace(/₹|\,/g, "")); // Remove currency symbol and commas
+			// Attempt to convert fare to a number, handling potential errors
+			let cost;
+			try {
+				cost = parseFloat(route.fare.replace(/₹|\,/g, ""));
+			} catch (error) {
+				console.warn(
+					`Error parsing fare for route: ${route.fare}`,
+					error
+				);
+				cost = 0; // Assign a default value (consider a more appropriate value for your scenario)
+			}
 
-			// Check if cost is empty string or "N/A" (case-insensitive)
-			if (cost !== "" && cost !== "N/A") {
+			// Check if cost is a valid number (not NaN) and not "N/A" (case-insensitive)
+			if (!isNaN(cost) && cost !== "N/A".toLowerCase()) {
 				return acc + cost;
 			} else {
-				return acc; // Ignore empty or "N/A" values
+				return acc; // Ignore empty or invalid values
 			}
 		}, 0);
 	};
