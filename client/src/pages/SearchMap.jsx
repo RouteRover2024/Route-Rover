@@ -1,4 +1,4 @@
- /*global google*/ 
+/*global google*/
 import { useRef, useState, useEffect } from "react";
 import { FaTimes, FaMapMarkerAlt } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
@@ -10,7 +10,6 @@ import {
 	Marker,
 	DirectionsRenderer,
 } from "@react-google-maps/api";
-
 
 const center = { lat: 19.099279618216062, lng: 72.86539675765846 };
 
@@ -72,7 +71,10 @@ function SearchMap() {
 	// Define state for pagination
 	const [currentPageTransit, setCurrentPageTransit] = useState(1);
 	const transitPerPage = 6; // Adjust this number as per your preference
-
+	// Message / Notif
+	const [message, setMessage] = useState("");
+	const [messageColor, setMessageColor] = useState("");
+	const [disabled, setDisable] = useState(true);
 	// Calculate index of the last transit option on current page
 	const indexOfLastTransit = currentPageTransit * transitPerPage;
 	// Calculate index of the first transit option on current page
@@ -93,12 +95,6 @@ function SearchMap() {
 	const [savedAddresses, setSavedAddresses] = useState([]);
 	const [src, setSrc] = useState("");
 	const [dest, setDest] = useState("");
-	
-
-	
-
-	
-
 
 	useEffect(() => {
 		const addressesData = JSON.parse(localStorage.getItem("addresses"));
@@ -121,7 +117,13 @@ function SearchMap() {
 	}, []);
 
 	if (!isLoaded) {
-		return <div>Loading...</div>;
+		return (
+			<div className="h-screen w-full flex items-center justify-center">
+				<h1 className="text-4xl font-semibold animate-pulse">
+					Loading...
+				</h1>
+			</div>
+		);
 	}
 
 	// const debouncedSearch = debounce((searchTerm) => {
@@ -146,6 +148,12 @@ function SearchMap() {
 		}
 
 		try {
+			setMessage("Calculating Route");
+			setMessageColor(
+				"text-white bg-gradient-to-r from-blue-500 to-blue-700"
+			);
+			setTimeout(() => setMessage(""), 3000);
+
 			const directionsService = new google.maps.DirectionsService();
 			const results = await directionsService.route({
 				origin: originRef.current.value,
@@ -159,6 +167,7 @@ function SearchMap() {
 				console.log(results);
 			if (results.status === "OK") {
 				setDirectionsResponse(results);
+				setDisable(false);
 
 				const routesInfo = results.routes?.map((route, index) => ({
 					summary: route.summary,
@@ -235,7 +244,11 @@ function SearchMap() {
 		setRoutesInfo([]);
 		originRef.current.value = "";
 		destinationRef.current.value = "";
-
+		setMessage("Cleared Route");
+		setMessageColor(
+			"text-white bg-gradient-to-r from-rose-500 to-rose-700"
+		);
+		setTimeout(() => setMessage(""), 3000);
 	}
 
 	function handleRouteSelect(index) {
@@ -245,11 +258,18 @@ function SearchMap() {
 	const saveHistory = async (e) => {
 		e.preventDefault();
 
+		setMessage("Saving Route...");
+		setMessageColor(
+			"text-white bg-gradient-to-r from-green-500 to-green-700"
+		);
+		setTimeout(() => setMessage("Route Saved!"), 3000);
+		setTimeout(() => setMessage(""), 5000);
+
 		// Check if route is available before accessing properties
 		if (routesInfo[selectedRouteIndex]) {
 			const route = routesInfo[selectedRouteIndex];
 			let { distance, duration, fare } = route;
-			fare = fare ? fare.text : '';
+			fare = fare ? fare.text : "";
 
 			try {
 				await axios
@@ -264,8 +284,8 @@ function SearchMap() {
 						if (res.data === "failed") {
 							alert("Failed to save data!");
 						} else {
-
 							alert("Route saved successfully!");
+
 
 						}
 					});
@@ -280,7 +300,7 @@ function SearchMap() {
 	return (
 		<div className="mt-6 ">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-				<h1 className="text-3xl font-semibold text-gray-900">
+				<h1 className="text-3xl font-semibold text-slate-900">
 					New Journey
 				</h1>
 			</div>
@@ -306,13 +326,13 @@ function SearchMap() {
 					</GoogleMap>
 				</div>
 				{/* Inputs and Controls */}
-				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-md p-4">
+				<div className="flex flex-col items-center justify-between sm:gap-4 gap-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-md p-4">
 					<form action="POST" className="h-full flex flex-col">
 						<input
 							type="text"
 							placeholder="Origin"
 							ref={originRef}
-							className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
+							className="w-full block rounded-md focus:ring-purple-500 focus:border-purple-500 text-sm px-4 py-2 my-1 border-slate-600 border-2 font-bold font-mono bg-gradient-to-r from-slate-700 to-slate-600 text-white bg-clip-text"
 							//onChange={handleOriginInputChange}
 							list="origin-addresses"
 							onChange={(e) => {
@@ -329,7 +349,7 @@ function SearchMap() {
 							type="text"
 							placeholder="Destination"
 							ref={destinationRef}
-							className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-gray-600 border-2 font-bold font-mono bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text"
+							className="w-full block rounded-md :ring-purple-500 focus:focusborder-purple-500 text-sm px-4 py-2 my-1 border-slate-600 border-2 font-bold font-mono bg-gradient-to-r from-slate-700 to-slate-600 text-white bg-clip-text"
 							//onChange={handleDestinationInputChange}
 							list="destination-addresses"
 							onChange={(e) => {
@@ -350,7 +370,7 @@ function SearchMap() {
 								<select
 									value={travelMode}
 									onChange={handleTravelModeChange}
-									className="inline-flex items-center px-4 py-2 border border-gray-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-gray-700 to-gray-600 text-white bg-clip-text /* Remove conflicting styles */ hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono appearance-none outline-none"
+									className="inline-flex items-center px-4 py-2 border border-slate-600 shadow-sm text-sm rounded-md bg-gradient-to-r from-slate-700 to-slate-600 text-white bg-clip-text /* Remove conflicting styles */ hover:bg-gradient-to-r hover:from-slate-600 hover:to-slate-500 focus:ring-purple-500 focus:border-purple-500 font-medium font-mono appearance-none outline-none"
 								>
 									<option
 										className="text-black"
@@ -380,58 +400,74 @@ function SearchMap() {
 							</div>
 						</div>
 
-						<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
-							<button
-								type="button"
-								onClick={calculateRoute}
-								className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-blue-600 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-							>
-								<span className="text-white">
-									Calculate Route
-								</span>
-							</button>
-							<button
-								type="button"
-								onClick={saveHistory}
-								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-							>
-								<FaSave className="text-white" />
-							</button>
-							<button
-								type="button"
-								onClick={clearRoute}
-								title="Clear Route"
-								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-							>
-								<FaTimes className="text-white" />
-							</button>
-							<button
-								type="button"
-								className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-orange-600 to-orange-700 hover:bg-gradient-to-r hover:from-orange-700 hover:to-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-								onClick={() => {
-									map.panTo(center);
-									map.setZoom(15);
-								}}
-								title="ReLocate"
-							>
-								<FaMapMarkerAlt className="text-white" />
-							</button>
+						<div className="flex flex-col justify-evenly items-center w-full sm:mt-auto mt-2 mb-2 gap-2">
+							{message && (
+								<div
+									className={`mt-auto visible w-full text-center rounded-xl py-1 px-2 font-bold ${messageColor}`}
+								>
+									{message}
+								</div>
+							)}
+							<div className="flex flex-row justify-evenly items-center w-full sm:mt-auto mt-2 mb-2">
+								<button
+									type="button"
+									onClick={calculateRoute}
+									className="row-span-2 inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md bg-gradient-to-r from-blue-600 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+								>
+									<span className="text-white">
+										Calculate Route
+									</span>
+								</button>
+								<button
+									type="button"
+									disabled={disabled}
+									onClick={saveHistory}
+									title="SaveRoute"
+									className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-green-600 to-green-700 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+								>
+									<FaSave className="text-white" />
+								</button>
+								<button
+									type="button"
+									onClick={clearRoute}
+									title="Clear Route"
+									className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-rose-600 to-rose-700 hover:bg-gradient-to-r hover:from-rose-700 hover:to-rose-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+								>
+									<FaTimes className="text-white" />
+								</button>
+								<button
+									type="button"
+									className="inline-flex items-center p-2 border-transparent rounded-full shadow-sm bg-gradient-to-r from-orange-600 to-orange-700 hover:bg-gradient-to-r hover:from-orange-700 hover:to-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+									onClick={() => {
+										map.panTo(center);
+										map.setZoom(15);
+
+										setMessage("Relocating Map");
+										setMessageColor(
+											"text-white bg-gradient-to-r from-orange-500 to-orange-700"
+										);
+										setTimeout(() => setMessage(""), 3000);
+									}}
+									title="ReLocate"
+								>
+									<FaMapMarkerAlt className="text-white" />
+								</button>
+							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-			{/* Transit options */}
 			<div className="p-2 sm:mx-4">
 				{/* Route Options */}
-				<div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-4 px-4 overflow-auto">
+				<div className="flex flex-row flex-wrap sm:flex-nowrap py-2 sm:flex-row items-center gap-4 sm:gap-8 mt-2 px-4 overflow-auto">
 					{routesInfo.map((route, index) => (
 						<div
 							key={index}
-							className={`p-2 border border-gray-300 rounded-md cursor-pointer ${selectedRouteIndex === index
-								? "bg-gray-100"
-								: "hover:bg-gray-100"
-								}`}
-
+							className={`p-2 border border-slate-300 rounded-md cursor-pointer ${
+								selectedRouteIndex === index
+									? "bg-slate-200"
+									: "hover:bg-slate-300"
+							}`}
 							onClick={() => handleRouteSelect(route.index)}
 						>
 							<p className="font-semibold">Route {index + 1}</p>
@@ -478,7 +514,7 @@ function SearchMap() {
 							{currentTransitOptions.map((option, index) => (
 								<div
 									key={index}
-									className="bg-gray-700 rounded-lg shadow-lg overflow-hidden p-4"
+									className="bg-slate-700 rounded-lg shadow-lg overflow-hidden p-4"
 								>
 									{option?.transitLine.vehicle && (
 										<div className="flex items-center gap-2">
@@ -496,7 +532,7 @@ function SearchMap() {
 														option.vehicleType
 													)}
 												</p>
-												<p className="text-gray-400 text-sm">
+												<p className="text-slate-400 text-sm">
 													{option.transitLine?.name}
 												</p>
 											</div>
@@ -522,7 +558,7 @@ function SearchMap() {
 											)}
 										</span>
 									</div>
-									<p className="text-gray-400 text-sm">
+									<p className="text-slate-400 text-sm">
 										{option.instructions}
 									</p>
 									{option?.fare && option?.num_stops && (
@@ -543,7 +579,7 @@ function SearchMap() {
 						</div>
 						{/* Pagination controls */}
 						<div className="flex justify-center items-center mt-4">
-							<ul className="flex list-none gap-2">
+							<ul className="flex list-none gap-2 text-black font-bold">
 								{Array.from({
 									length: Math.ceil(
 										transitOptions.length / transitPerPage
@@ -551,10 +587,11 @@ function SearchMap() {
 								}).map((_, index) => (
 									<li key={index}>
 										<button
-											className={`px-3 py-1 rounded-md ${currentPageTransit === index + 1
-												? "bg-gray-400"
-												: "bg-gray-200"
-												}`}
+											className={`px-3 py-1 rounded-md ${
+												currentPageTransit === index + 1
+													? "bg-slate-400"
+													: "bg-slate-200"
+											}`}
 											onClick={() =>
 												paginateTransit(index + 1)
 											}
@@ -567,8 +604,7 @@ function SearchMap() {
 						</div>
 					</div>
 				)}
-				
-				{/* Transit */}
+
 				<div className="p-2 sm:m-4">
 					<div className="font-semibold mb-4">Transit Agencies:</div>
 					{transitOptions.length > 0 && (
@@ -576,7 +612,9 @@ function SearchMap() {
 							{transitOptions
 								.reduce((acc, option) => {
 									const existingVehicleType = acc.find(
-										(item) => item.vehicleType === option.vehicleType
+										(item) =>
+											item.vehicleType ===
+											option.vehicleType
 									);
 									if (!existingVehicleType) {
 										acc.push(option);
@@ -587,20 +625,35 @@ function SearchMap() {
 								.map((option, index) => (
 									<div
 										key={index}
-										className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col justify-between"
+										className="bg-slate-900 rounded-lg shadow-lg p-4 flex flex-col justify-between"
 									>
 										<div>
 											<p className="text-white font-semibold mb-2">
-												{option?.transitLine.agencies[0].name}
+												{
+													option?.transitLine
+														.agencies[0].name
+												}
 											</p>
-											<p className="text-gray-300 mb-2">
-												<span className="font-semibold">Phone:</span>{" "}
-												{option?.transitLine.agencies[0].phone}
+											<p className="text-slate-300 mb-2">
+												<span className="font-semibold">
+													Phone:
+												</span>{" "}
+												{
+													option?.transitLine
+														.agencies[0].phone
+												}
 											</p>
-											<button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-100/10 dark:shadow-lg dark:shadow-blue-200/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
-												onClick={() => window.open(option?.transitLine.agencies[0].url, "_blank")}
+											<button
+												type="button"
+												className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-100/10 dark:shadow-lg dark:shadow-blue-200/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+												onClick={() =>
+													window.open(
+														option?.transitLine
+															.agencies[0].url,
+														"_blank"
+													)
+												}
 											>
-											
 												Visit Website
 											</button>
 										</div>
@@ -623,7 +676,6 @@ function SearchMap() {
 						</div>
 					)}
 				</div>
-
 			</div>
 		</div>
 	);
