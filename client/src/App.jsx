@@ -10,25 +10,30 @@ const History = React.lazy(() => import("./pages/History"));
 const Reports = React.lazy(() => import("./pages/Reports"));
 const Addresses = React.lazy(() => import("./pages/Addresses"));
 const Settings = React.lazy(() => import("./pages/Settings"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
+const LandingPage = React.lazy(()=>import("./pages/LandingPage"));
 
 function App() {
-  return (
-    <Router>
-      <Suspense fallback={<Skeleton/>}>
-        <Routes>
-          <Route exact path="/" element={<SignIn />} />
-          <Route path="/home" element={<HomePage />}>
-            <Route path="" element={<Dashboard />} />
-            <Route path="create" element={<SearchMap />} />
-            <Route path="history" element={<History />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="addresses" element={<Addresses />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-        </Routes>
-      </Suspense>
-    </Router>
-  );
+	return (
+		<Router>
+			<Suspense fallback={<Skeleton />}>
+				<Routes>
+					<Route exact path="/" element={<LandingPage/>} />
+					<Route path="/signin" element={<SignIn />}/>
+					<Route path="/home" element={<HomePage />}>
+						<Route path="" element={<Dashboard />} />
+						<Route path="create" element={<SearchMap />} />
+						<Route path="history" element={<History />} />
+						<Route path="reports" element={<Reports />} />
+						<Route path="addresses" element={<Addresses />} />
+						<Route path="settings" element={<Settings />} />
+						<Route path="*" element={<NotFound link="/home" />} />
+					</Route>
+					<Route path="*" element={<NotFound link="/" />} />
+				</Routes>
+			</Suspense>
+		</Router>
+	);
 }
 
 export default App;

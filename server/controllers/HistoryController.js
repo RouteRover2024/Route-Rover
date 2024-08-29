@@ -12,7 +12,7 @@ const HistoryController = {
         }
     },
 
-    getHistoryById: async (req, res) => {
+    getHistoryById: async (req, res) => { 
         const historyId = req.params.historyId;
         try {
             const history = await History.findById(historyId);

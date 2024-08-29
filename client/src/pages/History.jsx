@@ -1,87 +1,27 @@
-const routes = [
-	{
-		source: "Vashi",
-		destination: "Kharghar",
-		date: "1st January 2024",
-		duration: "1hr",
-		distance: "20km",
-		cost: 100,
-	},
-	{
-		source: "Santacruz",
-		destination: "Andheri",
-		date: "2nd February 2024",
-		duration: "1hr 7mins",
-		distance: "20km",
-		cost: 20,
-	},
-	{
-		source: "Versova",
-		destination: "Marol Naka",
-		date: "3rd March 2024",
-		duration: "20mins",
-		distance: "20km",
-		cost: 40,
-	},
-	{
-		source: "Borivali",
-		destination: "Churchgate",
-		date: "4th April 2024",
-		duration: "32mins",
-		distance: "20km",
-		cost: 45,
-	},
-	{
-		source: "Dadar",
-		destination: "CSMT",
-		date: "5th May 2024",
-		duration: "40mins",
-		distance: "20km",
-		cost: 25,
-	},
-	{
-		source: "Thane",
-		destination: "Kalyan",
-		date: "6th June 2024",
-		duration: "1hr",
-		distance: "20km",
-		cost: 80,
-	},
-	{
-		source: "Goregaon",
-		destination: "Malad",
-		date: "7th July 2024",
-		duration: "40mins",
-		distance: "20km",
-		cost: 40,
-	},
-	{
-		source: "Kurla",
-		destination: "Ghatkopar",
-		date: "8th August 2024",
-		duration: "10mins",
-		distance: "20km",
-		cost: 10,
-	},
-	{
-		source: "Mumbai Central",
-		destination: "Mahalaxmi",
-		date: "9th September 2024",
-		duration: "30mins",
-		distance: "20km",
-		cost: 50,
-	},
-	{
-		source: "Wadala",
-		destination: "Dadar",
-		date: "10th October 2024",
-		duration: "10mins",
-		distance: "20km",
-		cost: 25,
-	},
-];
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function History() {
+	const [routes, setRoutes] = useState([]);
+	const [isLoading, setIsLoading] = useState(true); // Added state for loading
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get(
+					"http://localhost:6005/histories"
+				);
+				setRoutes(response.data);
+			} catch (err) {
+				console.error("Error fetching history:", err);
+			} finally {
+				setIsLoading(false); // Set loading to false after fetching (success or error)
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	return (
 		<div className="py-6">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -104,80 +44,98 @@ function History() {
 								</p>
 							</div>
 						</div>
-						<div className="mt-8 flex flex-col">
-							<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-								<div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-									<div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-										<table className="min-w-full divide-y divide-gray-300">
-											<thead className="bg-gray-50">
-												<tr>
-													<th
-														scope="col"
-														className="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6"
-													>
-														Source
-													</th>
-													<th
-														scope="col"
-														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-													>
-														Destination
-													</th>
-													<th
-														scope="col"
-														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-													>
-														Date
-													</th>
-													<th
-														scope="col"
-														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-													>
-														Distance
-													</th>
-													<th
-														scope="col"
-														className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
-													>
-														Duration
-													</th>
-													<th
-														scope="col"
-														className="px-3 py-3 pr-6 text-right text-xs font-medium uppercase tracking-wide text-gray-500 sm:pr-6"
-													>
-														Cost
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-												{routes.map((person) => (
-													<tr key={person.date}>
-														<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-															{person.source}
-														</td>
-														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-															{person.destination}
-														</td>
-														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-															{person.date}
-														</td>
-														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-															{person.distance}
-														</td>
-														<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-															{person.duration}
-														</td>
-														<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm text-green-500 font-medium sm:pr-6">
-															{person.cost}
-														</td>
+						{isLoading ? ( // Display loading message while fetching data
+							<div className="mt-8 text-center">
+								<p>Loading history...</p>
+							</div>
+						) : routes.length === 0 ? ( // Display fallback if no routes
+							<div className="mt-8 text-center">
+								<p>No previous routes found.</p>
+							</div>
+						) : (
+							<div className="mt-8 flex flex-col">
+								<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+									<div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+										<div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+											<table className="min-w-full divide-y divide-gray-300">
+												<thead className="bg-gray-50">
+													<tr>
+														<th
+															scope="col"
+															className="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6"
+														>
+															Source
+														</th>
+														<th
+															scope="col"
+															className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+														>
+															Destination
+														</th>
+														<th
+															scope="col"
+															className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+														>
+															Date
+														</th>
+														<th
+															scope="col"
+															className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+														>
+															Distance
+														</th>
+														<th
+															scope="col"
+															className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+														>
+															Duration
+														</th>
+														<th
+															scope="col"
+															className="px-3 py-3 pr-6 text-right text-xs font-medium uppercase tracking-wide text-gray-500 sm:pr-6"
+														>
+															Cost
+														</th>
 													</tr>
-												))}
-											</tbody>
-										</table>
+												</thead>
+												<tbody>
+													{routes.slice().reverse().map((person) => (
+														<tr key={person._id}>
+															<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+																{person.src}
+															</td>
+															<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+																{person.dest}
+															</td>
+															<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+																{
+																	person.time.split(
+																		"T"
+																	)[0]
+																}
+															</td>
+															<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+																{
+																	person.distance
+																}
+															</td>
+															<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+																{
+																	person.duration
+																}
+															</td>
+															<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm text-green-500 font-medium sm:pr-6">
+																{person.fare}
+															</td>
+														</tr>
+													))}
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>
