@@ -12,6 +12,7 @@ import {
 	XIcon,
 	OfficeBuildingIcon,
 	PlusCircleIcon,
+	ChartBarIcon
 } from "@heroicons/react/outline";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
@@ -52,7 +53,7 @@ export default function Example() {
 			current: true,
 		},
 		{ name: "History", to: "history", icon: FolderIcon, current: false },
-		// { name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
+		{ name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
 		{
 			name: "Addresses",
 			to: "addresses",
