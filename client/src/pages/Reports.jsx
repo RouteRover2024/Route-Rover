@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from "react";
-
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from 'recharts';
 const Reports = () => {
   const [scrapedData, setScrapedData] = useState({ title: '', content: [] });
   const [loading, setLoading] = useState(true);
 
+  const pricingData = [
+    { distance: '5km', Western: 10, Central: 12, Harbour: 11 },
+    { distance: '10km', Western: 15, Central: 18, Harbour: 16 },
+    { distance: '15km', Western: 20, Central: 22, Harbour: 21 },
+    { distance: '20km', Western: 25, Central: 28, Harbour: 26 },
+    { distance: '25km', Western: 30, Central: 32, Harbour: 31 },
+    { distance: '30km', Western: 35, Central: 38, Harbour: 36 }
+  ];
   // Sample data for statistics - you can modify based on actual data
   const railwayStats = [
     { line: "Western Line", dailyRidership: "3.5 million", stations: 36 },
@@ -85,16 +102,86 @@ const Reports = () => {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Main Content */}
       <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-blue-900">
+      <h1 className="text-3xl font-bold text-blue-900">
               {scrapedData.title}
             </h1>
-            <img 
-              src="/api/placeholder/50/50"
-              alt="Railway Icon"
-              className="w-12 h-12"
-            />
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+          
+          <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="p-6 border-b border-gray-200">
+        <h2 className="text-2xl font-bold text-gray-800">
+          Mumbai Railway Ticket Pricing
+        </h2>
+      </div>
+      
+      <div className="p-6">
+        <div className="h-96">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={pricingData}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 10
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="distance" 
+                label={{ 
+                  value: 'Distance', 
+                  position: 'bottom' 
+                }}
+              />
+              <YAxis 
+                label={{ 
+                  value: 'Price (₹)', 
+                  angle: -90, 
+                  position: 'insideLeft' 
+                }}
+              />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '0.375rem',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <Legend 
+                wrapperStyle={{
+                  paddingTop: '20px'
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="Western"
+                stroke="#2196F3"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="Central"
+                stroke="#F44336"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="Harbour"
+                stroke="#4CAF50"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </div>
+            
           </div>
           <div className="prose max-w-none">
             {renderContent(scrapedData.content)}
@@ -157,25 +244,6 @@ const Reports = () => {
             </table>
           </div>
         </div>
-      </div>
-
-      {/* Table of Contents */}
-      <div className="bg-white rounded-lg shadow-lg mt-8 p-6">
-        <h2 className="text-xl font-semibold text-blue-800 mb-4">
-          Table of Contents
-        </h2>
-        <nav>
-          {scrapedData.content
-            .filter(item => item.startsWith('##'))
-            .map((section, index) => (
-              <div
-                key={index}
-                className="py-2 px-4 hover:bg-gray-100 cursor-pointer rounded transition duration-200"
-              >
-                {section.replace('##', '').trim()}
-              </div>
-            ))}
-        </nav>
       </div>
     </div>
   );
