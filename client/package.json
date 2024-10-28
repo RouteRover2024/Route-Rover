@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^1.0.6",
+    "@radix-ui/react-tabs": "^1.1.1",
     "@react-google-maps/api": "^2.19.3",
     "@react-three/drei": "^9.111.3",
     "@react-three/fiber": "^8.17.6",

@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/outline";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { UserIcon } from "lucide-react";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
@@ -58,7 +59,12 @@ export default function Example() {
 			to: "addresses",
 			icon: OfficeBuildingIcon,
 			current: false,
-		},
+		},{
+			name: "About",
+			to: "about",
+			icon: UserIcon,
+			current: false,
+		}
 	];
 
 	return (

@@ -240,3 +240,36 @@ app.get('/scrape', async (req, res) => {
 	}
   });
   
+  app.get('/news', async (req, res) => {
+    try {
+        const url = 'https://yatrirailways.com/commuter-news';
+        
+        const response = await axios.get(url);
+        const $ = cheerio.load(response.data);
+        
+        const news = [];
+        
+        // Adjust these selectors based on the actual website structure
+        $('.news-item').each((i, element) => {
+            const title = $(element).find('.title').text().trim();
+            const description = $(element).find('.description').text().trim();
+            const date = $(element).find('.date').text().trim();
+            const imageUrl = $(element).find('img').attr('src');
+            const category = $(element).find('.category').text().trim().toLowerCase() || 'all';
+            
+            news.push({
+                title,
+                description,
+                date,
+                imageUrl,
+                category
+            });
+        });
+        
+        res.json(news);
+		console.log(news);
+    } catch (error) {
+        console.error('Scraping error:', error);
+        res.status(500).json({ error: 'Failed to fetch news' });
+    }
+});
