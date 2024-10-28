@@ -273,7 +273,7 @@ function SearchMap() {
 
 			try {
 				await axios
-					.post("http://localhost:6005/", {
+					.post("https://route-rover-bpyg.onrender.com/", {
 						src,
 						dest,
 						fare: fare,

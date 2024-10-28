@@ -9,7 +9,7 @@ function History() {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					"http://localhost:6005/histories"
+					"https://route-rover-bpyg.onrender.com/histories"
 				);
 				setRoutes(response.data);
 			} catch (err) {

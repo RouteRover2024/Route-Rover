@@ -38,7 +38,7 @@ const Reports = () => {
   useEffect(() => {
     const fetchScrapedData = async () => {
       try {
-        const response = await fetch('http://localhost:6005/scrape');
+        const response = await fetch('https://route-rover-bpyg.onrender.com/scrape');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

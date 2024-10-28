@@ -3,7 +3,7 @@ import React from "react";
 function Settings() {
 	const logout = () => {
         localStorage.clear();
-        fetch("http://localhost:5173/logout", {
+        fetch("https://route-rover-bpyg.onrender.com/logout", {
             method: "GET",
             credentials: "include" 
         })

@@ -5,7 +5,7 @@ export default function SignIn() {
 	const Navigate = useNavigate();
 
 	const loginwithgoogle = () => {
-		window.open("http://localhost:6005/auth/google/callback", "_self");
+		window.open("https://route-rover-bpyg.onrender.com/auth/google/callback", "_self");
 	};
 
 	const handleSubmit = (event) => {

@@ -30,7 +30,7 @@ export default function Example() {
 	const getUser = async () => {
 		try {
 			const response = await axios.get(
-				"http://localhost:6005/login/success",
+				"https://route-rover-bpyg.onrender.com/login/success",
 				{ withCredentials: true }
 			);
 			setUserdata(response.data.user);
