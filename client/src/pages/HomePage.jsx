@@ -5,7 +5,7 @@ import RouteRover from "../assets/RouteRoverLogoText.svg";
 import axios from "axios";
 
 import {
-	// ChartBarIcon,
+	ChartBarIcon,
 	FolderIcon,
 	HomeIcon,
 	MenuIcon,
@@ -53,7 +53,7 @@ export default function Example() {
 			current: true,
 		},
 		{ name: "History", to: "history", icon: FolderIcon, current: false },
-		// { name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
+		{ name: "Reports", to: "reports", icon: ChartBarIcon, current: false },
 		{
 			name: "Addresses",
 			to: "addresses",

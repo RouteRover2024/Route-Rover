@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { Suspense } from "react";
 import { Skeleton } from "@chakra-ui/react";
-import About from "./pages/About";
+
 
 const SignIn = React.lazy(() => import("./pages/SignIn"));
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -13,7 +13,7 @@ const Addresses = React.lazy(() => import("./pages/Addresses"));
 const Settings = React.lazy(() => import("./pages/Settings"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const LandingPage = React.lazy(()=>import("./pages/LandingPage"));
-const News = React.lazy(()=>import("./pages/About"));
+const About = React.lazy(()=>import("./pages/About"));
 
 function App() {
 	return (
