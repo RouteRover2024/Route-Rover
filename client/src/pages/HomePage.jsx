@@ -12,6 +12,7 @@ import {
 	XIcon,
 	OfficeBuildingIcon,
 	PlusCircleIcon,
+	ChartBarIcon
 } from "@heroicons/react/outline";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";

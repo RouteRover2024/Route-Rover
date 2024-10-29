@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app/client
+      - /app/client/node_modules
+    environment:
+      - VITE_API_URL=http://server:6005  # Adjust this URL as needed
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.server
+    ports:
+      - "6005:6005"
+    volumes:
+      - ./server:/app/server
+      - /app/server/node_modules
