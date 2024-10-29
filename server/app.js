@@ -45,7 +45,7 @@ passport.use(
 		{
 			clientID: clientid,
 			clientSecret: clientsecret,
-			callbackURL: "/auth/google/callback",
+			callbackURL: "https://route-rover-bpyg.onrender.com/auth/google/callback",
 			scope: ["profile", "email"],
 		},
 		async (accessToken, refreshToken, profile, done) => {

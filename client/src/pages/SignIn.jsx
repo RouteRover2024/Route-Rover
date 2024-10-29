@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import RouteRover from "../assets/RouteRoverLogoText.svg";
 
 export default function SignIn() {
-	const Navigate = useNavigate();
+	const navigate  = useNavigate();
 
-	const loginwithgoogle = () => {
+	const loginWithGoogle  = () => {
 		window.open("https://route-rover-bpyg.onrender.com/auth/google/callback", "_self");
 	};
 
@@ -12,7 +12,7 @@ export default function SignIn() {
 		event.preventDefault();
 		// Your form submission logic here
 		// For now, just redirect to the homepage
-		Navigate("/home/");
+		navigate ("/home/");
 	};
 
 	return (
@@ -130,7 +130,7 @@ export default function SignIn() {
 
 								<div>
 									<button
-										onClick={loginwithgoogle}
+										onClick={loginWithGoogle }
 										className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm backdrop-blur-sm text-sm font-medium text-gray-300 hover:bg-gray-50 hover:border-black"
 									>
 										<span className="sr-only">
