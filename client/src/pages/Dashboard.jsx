@@ -11,7 +11,9 @@ function Dashboard() {
 			try {
 				const response = await axios.get(
 					"https://route-rover-bpyg.onrender.com/histories"
-				);
+				,{
+					withCredentials: true
+				});
 				setRoutes(response.data);
 			} catch (err) {
 				console.error("Error fetching history:", err);
