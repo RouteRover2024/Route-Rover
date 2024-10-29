@@ -19,7 +19,7 @@ const clientsecret = process.env.CLIENT_SECRET;
 
 app.use(
 	cors({
-		origin: "http://localhost:5173",
+		origin: "https://route-rover-bpyg.onrender.com",
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		credentials: true,
 	})
@@ -88,8 +88,8 @@ app.get(
 app.get(
 	"/auth/google/callback",
 	passport.authenticate("google", {
-		successRedirect: "http://localhost:5173/home/",
-		failureRedirect: "http://localhost:5173/",
+		successRedirect: "https://route-rover-frontend.onrender.com/home/",
+		failureRedirect: "https://route-rover-frontend.onrender.com/",
 	})
 );
 
