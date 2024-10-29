@@ -153,7 +153,7 @@ app.use((err, req, res, next) => {
 });
 
 
-app.get('https://route-rover-frontend.onrender.com/histories', async (req, res) => {
+app.get('/histories', async (req, res) => {
 	try {
 	  const history = await historydb.find();
 	  res.json(history);
@@ -165,7 +165,7 @@ app.get('https://route-rover-frontend.onrender.com/histories', async (req, res) 
 
 
   // New Wikipedia scraping endpoint
-app.get('https://route-rover-frontend.onrender.com/scrape', async (req, res) => {
+app.get('/scrape', async (req, res) => {
 	try {
 	  const response = await axios.get('https://en.wikipedia.org/wiki/Mumbai_Suburban_Railway');
 	  const $ = cheerio.load(response.data);
