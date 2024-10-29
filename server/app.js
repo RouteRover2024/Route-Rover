@@ -19,7 +19,7 @@ const clientsecret = process.env.CLIENT_SECRET;
 
 app.use(
 	cors({
-		origin: "https://route-rover-bpyg.onrender.com",
+		origin: "https://route-rover-frontend.onrender.com/",
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		credentials: true,
 	})
